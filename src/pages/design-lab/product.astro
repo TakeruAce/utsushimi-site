@@ -1,0 +1,104 @@
+---
+import DesignConceptLayout from '../../layouts/DesignConceptLayout.astro';
+import { Image } from 'astro:assets';
+import device from '../../assets/images/hero-device.png';
+import award from '../../assets/images/gallery/1733474239904 (1).jpg';
+import demo from '../../assets/images/gallery/PXL_20240428_024805833.MP.jpg';
+const domains = [
+  { n: '01', en: 'REMOTE OPERATION', title: '遠隔重機操作', text: '指の力入力で重機を直感的に操作。逆動力学による自然な力覚フィードバックを、遠隔制御へ。' },
+  { n: '02', en: 'ASSISTIVE TECHNOLOGY', title: '福祉・リハビリテーション', text: '身体機能を拡張し、自立をサポート。身体的制約のある方のリモート就労を視野に、操作体験を設計します。' },
+  { n: '03', en: 'ENTERTAINMENT', title: 'エンターテインメント', text: 'アバタを自分の身体のように操作する、物理ベースの没入体験。フィジカルなインタラクションの新次元を拓きます。' },
+];
+const news = [
+  ['2024.12', '受賞', 'SIGGRAPH Asia 2024 Best Demo in Show Award を受賞しました'],
+  ['2024.10', '受賞', 'DCEXPO NEDO賞・SIGGRAPH Special Prize をダブル受賞しました'],
+  ['2024.10', '論文', 'ACM UIST 2024にて「Selfrionette」論文が採択されました'],
+];
+---
+<DesignConceptLayout title="A — Product minimal" concept="product">
+  <div class="product-site">
+    <header class="site-head wrap">
+      <a class="logo brand-jp" href="/design-lab/product/" aria-label="うつしみ トップ">うつしみ<span></span></a>
+      <nav aria-label="メインナビゲーション">
+        <a href="#technology">Technology</a><a href="#solutions">Solutions</a><a href="/company">Company</a><a href="#news">News</a>
+      </nav>
+      <a class="head-contact" href="/contact">お問い合わせ <span>↗</span></a>
+      <details class="mobile-nav"><summary>メニュー ＋</summary><nav aria-label="モバイルナビゲーション"><a href="#technology">Technology</a><a href="#solutions">Solutions</a><a href="/company">Company</a><a href="#news">News</a><a href="/contact">お問い合わせ ↗</a></nav></details>
+    </header>
+    <main>
+      <section class="hero wrap">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="dot"></span> 身体性インタフェース</p>
+          <h1>指先の力で、<br />あらゆるものを<br /><em>動かす。</em></h1>
+          <p class="hero-description">逆動力学で指の力を全身の関節トルクに変換。<br />遠隔操作に、身体の自由を。</p>
+          <div class="actions"><a class="button" href="/contact">共同開発について相談する <span>↗</span></a><a class="text-link" href="#technology">身体性インタフェースの技術 <span>↓</span></a></div>
+        </div>
+        <figure class="hero-photo">
+          <Image src={device} alt="指先の力を入力する身体性インタフェースを手で操作している様子" widths={[640,1000,1400]} sizes="(max-width: 800px) 92vw, 46vw" loading="eager" fetchpriority="high" />
+          <div class="photo-top"><span>身体性インタフェース</span><span>指先力入力</span></div>
+          <figcaption><span>小さな入力から、<br />身体の可能性を拡張する。</span><span class="photo-index">01 / DEVICE</span></figcaption>
+        </figure>
+      </section>
+      <section class="recognition wrap" aria-label="研究・受賞実績">
+        <p>RESEARCH<br />& RECOGNITION</p>
+        <div><b>SIGGRAPH Asia 2024</b><span>Best Demo in Show Award</span></div>
+        <div><b>DCEXPO</b><span>NEDO賞・SIGGRAPH Special Prize</span></div>
+        <div><b>ACM UIST 2024</b><span>論文採択</span></div>
+      </section>
+      <section class="intro wrap section" id="challenge">
+        <p class="eyebrow">01 / CHALLENGE</p>
+        <div><h2>人とデジタルのあいだに、<br />まだ壁がある。</h2><p class="body-copy">遠隔操作、VR、ロボティクス。技術は進化しても、人が機械を「自分の身体のように」動かせる世界には至っていません。</p>
+          <div class="barriers"><article><span>01</span><h3>操作の壁</h3><p>直感的に動かせず、習熟に時間がかかる。</p></article><article><span>02</span><h3>感覚の壁</h3><p>画面越しでは、硬さや重さが伝わらない。</p></article><article><span>03</span><h3>身体の壁</h3><p>身体的制約や狭い空間での利用に限界がある。</p></article></div>
+        </div>
+      </section>
+      <section class="technology section" id="technology">
+        <div class="wrap tech-grid">
+          <figure class="video-panel"><video controls muted playsinline preload="none" poster={device.src} aria-label="身体性インタフェースの動作デモ"><source src="/videos/device-motion.mp4" type="video/mp4" /></video><figcaption>DEVICE IN MOTION <span>指先力入力のデモ</span></figcaption></figure>
+          <div class="tech-copy"><p class="eyebrow">02 / TECHNOLOGY</p><h2>身体の自由を、<br />指先から。</h2><p class="body-copy">指先の力入力インタフェースにより、全身アバタの操作と力覚フィードバックを実現。棒揺らし・押す・泳ぐ・登るなど、多様な全身インタラクションを可能にします。</p><ul class="features"><li><span>01</span>指力入力（片手7自由度）</li><li><span>02</span>逆動力学変換</li><li><span>03</span>力覚フィードバック</li><li><span>04</span>全身アバタ操作</li></ul><a class="text-link" href="/products">技術の詳細を見る <span>↗</span></a></div>
+        </div>
+      </section>
+      <section class="section wrap" id="solutions">
+        <div class="section-top"><div><p class="eyebrow">03 / SOLUTIONS</p><h2>課題の整理から、<br />動くプロトタイプまで。</h2></div><p class="body-copy">お客様の課題に合わせた力覚マッピングの設計・PoC開発・効果検証を一貫してサポートします。</p></div>
+        <div class="domains">{domains.map(d=><article><p class="domain-label">{d.n}<span>{d.en}</span></p><h3>{d.title}</h3><p>{d.text}</p><a class="text-link" href="/solutions">詳しく見る <span>↗</span></a></article>)}</div>
+        <div class="process"><span>ともにつくる、4つのステップ</span><ol><li>ヒアリング</li><li>PoC開発</li><li>効果検証</li><li>システム統合</li></ol></div>
+      </section>
+      <section class="research section">
+        <div class="wrap"><div class="section-top"><div><p class="eyebrow">04 / RESEARCH & EXHIBITIONS</p><h2>研究から、<br />体験へ。</h2></div><p class="body-copy">SIGGRAPH、DCEXPO、UISTなど、国内外のカンファレンスへ。実際に体験いただいた方々からの評価が、複数の受賞につながっています。</p></div>
+          <div class="research-photos"><figure><Image src={demo} alt="展示会で身体性インタフェースの操作を体験する来場者" width={1000} loading="lazy" /><figcaption>人に触れてもらい、技術を育てる。</figcaption></figure><figure><Image src={award} alt="身体性インタフェースとSIGGRAPH Asiaの受賞トロフィー" width={900} loading="lazy" /><figcaption>SIGGRAPH Asia 2024 — Best Demo in Show Award</figcaption></figure></div>
+          <a class="text-link" href="/company">うつしみについて <span>↗</span></a>
+        </div>
+      </section>
+      <section class="news section wrap" id="news"><div><p class="eyebrow">05 / NEWS</p><h2>最新情報</h2><a class="text-link" href="/news">すべてのお知らせ <span>↗</span></a></div><div class="news-list">{news.map(([date,category,title])=><a href="/news"><div><time>{date}</time><span>{category}</span></div><h3>{title}</h3><span class="arrow">↗</span></a>)}</div></section>
+      <section class="contact wrap"><p class="eyebrow">LET’S BUILD TOGETHER</p><div><h2>そのアイデアを、<br />一緒に動かそう。</h2><a class="contact-circle" href="/contact" aria-label="共同開発のお問い合わせ">↗</a></div><p>技術デモのご依頼、共同研究のご相談、取材のお申し込みなど、<br class="desktop-break" />お気軽にお問い合わせください。</p><a class="text-link" href="/contact">お問い合わせ <span>↗</span></a></section>
+    </main>
+    <footer class="wrap"><div><a class="logo brand-jp" href="/design-lab/product/">うつしみ<span></span></a><p>うつしみ株式会社</p></div><nav aria-label="フッターナビゲーション"><a href="/company">Company</a><a href="/contact">Contact</a><a href="/privacy">Privacy Policy</a></nav><small>© {new Date().getFullYear()} Utsushimi</small></footer>
+  </div>
+</DesignConceptLayout>
+<style>
+  .product-site{--ink:#252722;--muted:#62655e;--line:#dcded6;--accent:#bd4b30;background:#fafbf7;color:var(--ink)}
+  .wrap{width:min(1280px,calc(100% - 112px));margin-inline:auto}.site-head{height:108px;display:flex;align-items:center;justify-content:space-between;gap:24px}.logo{font:750 37px/1 'Sora Variable',sans-serif;letter-spacing:-2.5px;display:inline-flex;gap:4px;align-items:flex-end}.logo span{height:7px;width:7px;border-radius:50%;background:var(--accent);margin-bottom:4px}.site-head nav{display:flex;gap:32px;font:12px 'Sora Variable',sans-serif}.site-head nav a:hover,.text-link:hover{color:var(--accent)}.head-contact{display:flex;gap:30px;align-items:center;border-bottom:1px solid var(--ink);font-size:12px;padding:10px 0}.head-contact span{font-size:20px}
+  .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center;padding:20px 0 64px}.eyebrow{font:10px/1.5 'Sora Variable',sans-serif;letter-spacing:.13em;font-weight:500;font-size:var(--size-label, 10px)}.hero-copy>.eyebrow{display:flex;align-items:center;gap:9px}.dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}h1{font-size:var(--size-title, clamp(42px, 4.85vw, 70px));font-weight:600;line-height:var(--line-title, 1.39);letter-spacing:-.06em;margin-top:33px}h1 em{font-style:normal;color:var(--accent)}.hero-description{font-size:var(--size-lead, 14px);line-height:var(--line-lead, 2.1);color:var(--muted);margin-top:24px}.actions{display:flex;align-items:center;flex-wrap:wrap;gap:28px;margin-top:35px}.button{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;padding:19px 24px;background:var(--ink);color:#fff;border-radius:6px;font-size:12px;transition:background .2s}.button:hover{background:var(--accent)}.button span{font-size:18px}.text-link{display:inline-flex;align-items:center;gap:22px;font-size:12px;border-bottom:1px solid var(--line);padding-bottom:9px}.hero-photo{position:relative;border-radius:16px;overflow:hidden;background:#dedde1;aspect-ratio:.94}.hero-photo>img{width:100%;height:100%;object-fit:cover;object-position:50% 48%}.photo-top{position:absolute;top:26px;left:26px;right:26px;display:flex;justify-content:space-between;align-items:center;font-size:11px}.photo-top span:first-child{font:600 20px 'Sora Variable',sans-serif;letter-spacing:-1px}.hero-photo figcaption{position:absolute;inset:auto 0 0;padding:55px 26px 27px;background:linear-gradient(transparent,rgba(244,243,241,.97));display:flex;align-items:flex-end;justify-content:space-between;font-size:18px;line-height:1.6;letter-spacing:-.04em}.photo-index{font:9px 'Sora Variable',sans-serif;letter-spacing:.06em}.recognition{display:grid;grid-template-columns:.8fr 1.2fr 1.35fr 1fr;gap:25px;align-items:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:28px}.recognition>p{font:9px/1.8 'Sora Variable',sans-serif;letter-spacing:.12em;color:var(--muted);font-size:var(--size-description, 9px)}.recognition div{display:flex;flex-direction:column;gap:6px}.recognition b{font:500 14px 'Sora Variable',sans-serif}.recognition div span{font-size:10px;color:var(--muted)}
+  .section{padding-top:116px;padding-bottom:116px}h2{font-size:var(--size-heading, clamp(30px, 3.2vw, 47px));font-weight:550;line-height:var(--line-heading, 1.5);letter-spacing:-.045em}.body-copy{font-size:14px;line-height:2.1;color:var(--muted);max-width:620px}.intro{display:grid;grid-template-columns:1fr 3fr;gap:40px}.intro>.eyebrow{padding-top:15px}.intro .body-copy{margin-top:24px}.barriers{margin-top:50px;display:grid;grid-template-columns:repeat(3,1fr);gap:30px}.barriers article{border-top:1px solid var(--line);padding-top:18px}.barriers span{font:11px 'Sora Variable',sans-serif;color:var(--accent)}.barriers h3{font-size:var(--size-subheading, 17px);font-weight:550;margin-top:16px}.barriers p{font-size:var(--size-description, 12px);line-height:var(--line-description, 1.9);color:var(--muted);margin-top:10px}.technology{background:#eeefe9}.tech-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:center}.video-panel video{width:100%;aspect-ratio:.96;object-fit:cover;border-radius:10px;background:#d9d8dc}.video-panel figcaption{font:9px 'Sora Variable',sans-serif;letter-spacing:.06em;display:flex;justify-content:space-between;margin-top:17px}.video-panel figcaption span{font:10px 'Noto Sans JP Variable',sans-serif;letter-spacing:0}.tech-copy h2{margin-top:22px}.tech-copy .body-copy{margin-top:24px}.features{list-style:none;padding:0;margin:30px 0}.features li{display:flex;gap:25px;padding:12px 0;border-top:1px solid #d2d5c9;font-size:13px}.features span{font:10px 'Sora Variable',sans-serif;color:var(--muted);padding-top:4px}.section-top{display:flex;justify-content:space-between;align-items:flex-end;gap:60px}.section-top h2{margin-top:22px}.section-top>.body-copy{width:370px;max-width:40%}.domains{margin-top:60px;display:grid;grid-template-columns:repeat(3,1fr);gap:40px}.domains article{border-top:1px solid var(--ink);padding-top:18px}.domain-label{display:flex;justify-content:space-between;font:9px 'Sora Variable',sans-serif;letter-spacing:.02em;color:var(--muted);font-size:var(--size-label, 9px)}.domains h3{font-size:var(--size-subheading, 19px);font-weight:550;letter-spacing:-.035em;margin-top:35px}.domains article>p:not(.domain-label){font-size:12px;line-height:2.05;color:var(--muted);margin-top:18px;min-height:102px}.domains .text-link{margin-top:25px}.process{margin-top:65px;background:#eeefe9;border-radius:8px;display:flex;align-items:center;padding:30px;gap:25px}.process>span{font-size:12px}.process ol{margin:0;padding:0;list-style:none;display:flex;justify-content:space-between;gap:25px;flex:1;font-size:12px}.process li+li::before{content:'→';color:#878c7c;margin-right:25px}.research{background:#f1eee6}.research-photos{display:grid;grid-template-columns:1.2fr 1fr;gap:32px;margin-top:50px}.research-photos img{width:100%;height:340px;object-fit:cover;border-radius:8px}.research-photos figure:last-child img{object-position:50% 65%}.research-photos figcaption{font-size:10px;line-height:1.8;margin-top:15px;color:var(--muted)}.research .text-link{margin-top:35px}.news{display:grid;grid-template-columns:1fr 2fr;gap:80px}.news h2{margin-top:18px}.news>div>.text-link{margin-top:25px}.news-list>a{position:relative;display:block;padding:24px 35px 24px 0;border-bottom:1px solid var(--line)}.news-list>a:first-child{border-top:1px solid var(--line)}.news-list>a>div{display:flex;gap:23px;font-size:10px;color:var(--muted)}.news-list time{font-family:'Sora Variable',sans-serif}.news-list h3{font-size:var(--size-subheading, 13px);line-height:var(--line-subheading, 1.9);font-weight:450;margin-top:12px}.arrow{position:absolute;right:5px;top:50%;transform:translateY(-50%)}.contact{background:#e9c8b8;border-radius:16px;padding:64px 76px;margin-bottom:70px}.contact>div{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-top:23px}.contact h2{font-size:var(--size-heading, clamp(35px, 4vw, 57px))}.contact-circle{width:110px;height:110px;border:1px solid #6c4e3f;border-radius:50%;display:flex;align-items:center;justify-content:center;font:45px 'Sora Variable',sans-serif;flex-shrink:0}.contact-circle:hover{background:#252722;color:white;border-color:#252722}.contact>p:not(.eyebrow){font-size:var(--size-label, 13px);line-height:var(--line-label, 2);margin-top:28px}.contact>.text-link{margin-top:25px;border-bottom-color:#a58373}footer{display:flex;align-items:flex-end;justify-content:space-between;padding-block:15px 42px;gap:25px}footer .logo{font-size:34px}footer p{font:9px 'Sora Variable',sans-serif;margin-top:15px;color:var(--muted);font-size:var(--size-description, 9px)}footer nav{display:flex;gap:25px;font:10px 'Sora Variable',sans-serif}footer small{font:9px 'Sora Variable',sans-serif;color:var(--muted)}
+  .mobile-nav{display:none}.site-head{position:relative}.mobile-nav summary{cursor:pointer;list-style:none;font-size:11px;padding:14px 0}.mobile-nav summary::-webkit-details-marker{display:none}.mobile-nav nav{position:absolute;inset:75px 0 auto;z-index:5;background:#fafbf7;border:1px solid var(--line);padding:20px;box-shadow:0 10px 15px #2527220a}.mobile-nav nav a{padding:10px 0;font-size:13px}
+  @media(min-width:1600px){.hero{gap:70px}.hero-photo{aspect-ratio:1}.hero h1{font-size:var(--size-title, 74px)}}
+  @media(max-width:1100px){.wrap{width:calc(100% - 64px)}.hero{gap:25px}.site-head nav{gap:20px}.tech-grid{gap:45px}.process{align-items:flex-start;flex-direction:column}.process ol{width:100%}.domains{gap:25px}.domains h3{font-size:var(--size-subheading, 16px)}.research-photos img{height:280px}}
+  @media(max-width:800px){.wrap{width:calc(100% - 40px)}.site-head{height:84px}.site-head nav{display:none}.logo{font-size:31px}.head-contact{font-size:11px;gap:20px}.hero{grid-template-columns:1fr;padding-top:20px;padding-bottom:35px;gap:38px}.hero h1{font-size:var(--size-title, clamp(42px, 8vw, 66px));line-height:var(--line-title, 1.4);margin-top:24px}.hero-description{font-size:var(--size-lead, 13px)}.hero-photo{aspect-ratio:1.12;max-height:620px}.actions{gap:24px;margin-top:27px}.button{padding:17px 19px;font-size:11px}.hero-copy .eyebrow{font-size:var(--size-label, 9px)}.recognition{grid-template-columns:1fr 1fr;gap:25px;padding-block:25px}.recognition b{font-size:11px}.recognition div span{font-size:9px}.recognition>p{font-size:var(--size-description, 9px)}.section{padding-block:70px}.intro{grid-template-columns:1fr;gap:26px}.intro>.eyebrow{padding-top:0}.barriers{gap:15px;margin-top:32px}.barriers p{font-size:var(--size-description, 11px)}.barriers h3{font-size:var(--size-subheading, 15px)}.tech-grid{grid-template-columns:1fr;gap:40px}.video-panel video{aspect-ratio:1.25}.tech-copy h2{font-size:var(--size-heading, 34px)}.section-top{align-items:flex-start;flex-direction:column;gap:23px}.section-top>.body-copy{max-width:100%;width:100%}.domains{grid-template-columns:1fr;gap:32px;margin-top:35px}.domains h3{margin-top:24px;font-size:var(--size-subheading, 21px)}.domains article>p:not(.domain-label){min-height:0;font-size:13px}.domains .text-link{margin-top:18px}.process{padding:24px;margin-top:40px}.process ol{display:grid;grid-template-columns:1fr 1fr;gap:19px;font-size:11px}.process li{counter-increment:step}.process li::before,.process li+li::before{content:'0' counter(step);margin-right:12px;color:#62655e;font:10px 'Sora Variable',sans-serif}.research-photos{grid-template-columns:1fr;gap:28px;margin-top:30px}.research-photos img{height:auto;aspect-ratio:1.4}.news{grid-template-columns:1fr;gap:32px}.news-list h3{font-size:var(--size-subheading, 12px)}.contact{padding:35px 26px;border-radius:12px;margin-bottom:45px}.contact h2{font-size:29px}.contact-circle{width:61px;height:61px;font-size:28px}.contact>p:not(.eyebrow){font-size:var(--size-label, 12px)}.desktop-break{display:none}footer{flex-wrap:wrap;align-items:center;padding-bottom:25px}footer>div{width:100%}footer nav{gap:20px}footer small{font-size:8px}}
+</style>
+<style>
+  .photo-top>span:last-child{background:#fafbf7;padding:7px 10px;border-radius:3px}
+  @media(max-width:800px){.mobile-nav{display:block}.site-head>.head-contact{margin-left:auto;gap:10px}.mobile-nav[open] nav{display:flex;flex-direction:column;gap:6px}.contact h2{font-size:var(--size-heading, clamp(23px, 6.2vw, 36px))}.contact-circle{width:61px;height:61px}.contact>div{gap:10px}}
+</style>
+<script>
+  document.querySelectorAll('.mobile-nav a').forEach(link => link.addEventListener('click', () => link.closest('details')?.removeAttribute('open')));
+  document.addEventListener('keydown', event => {
+    const menu = document.querySelector<HTMLDetailsElement>('.product-site .mobile-nav');
+    if (event.key === 'Escape' && menu?.open) { menu.open = false; menu.querySelector('summary')?.focus(); }
+  });
+</script>
+
+<style>
+  .logo { white-space: nowrap; flex-shrink: 0; letter-spacing: -2.5px; }
+  footer p { font-family: 'Noto Sans JP Variable', sans-serif; font-size: var(--size-description, 9px); }
+  @media(max-width:800px) { .site-head { gap: 12px; } .site-head > .logo { font-size: 25px; } .site-head > .head-contact { font-size: 10px; gap: 10px; white-space: nowrap; } .mobile-nav summary { font-size: 10px; white-space: nowrap; } footer .logo { font-size: 30px; } }
+  @media(max-width:360px) { .site-head { gap: 8px; } .site-head > .logo { font-size: 22px; } .site-head > .head-contact { font-size: 9px; gap: 6px; } .head-contact span { font-size: 16px; } .mobile-nav summary { font-size: 9px; } }
+</style>

@@ -1,0 +1,186 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactBand from '../components/ContactBand.astro';
+
+const engagementModels = [
+  { title: '貸出', description: '身体性インタフェースを用いた試用・検証に。用途への適合性を確かめたい方へ。' },
+  { title: '共同研究', description: '研究テーマを共有し、技術や利用体験を共同で検証します。' },
+  { title: '開発委託', description: '課題に応じたインタフェースや試作システムの開発に対応します。' },
+];
+
+const processSteps = [
+  {
+    number: '01',
+    title: 'ヒアリング・課題整理',
+    duration: '1〜2週間',
+    description: 'お客様の業務課題・操作環境・既存システムをヒアリング。HCI研究の視点から、人とデジタルのインタラクションのボトルネックを一緒に整理します。',
+    deliverable: '課題マップ・適用可能性レポート',
+    activities: ['現地訪問・操作環境の観察', 'ユーザーインタビュー・行動分析', '技術適用可能性の初期評価'],
+  },
+  {
+    number: '02',
+    title: 'PoC設計・プロトタイプ開発',
+    duration: '1〜3ヶ月',
+    description: 'ハードウェア・ソフトウェアの両面から、動作するプロトタイプを共同開発。センサデバイス設計、VR/シミュレーション環境構築、インタラクション設計まで一貫して対応します。',
+    deliverable: '動作プロトタイプ・技術検証レポート',
+    activities: ['インタラクション設計・シミュレーション', 'センサデバイスの設計・試作', 'VR/物理シミュレーション環境の構築'],
+  },
+  {
+    number: '03',
+    title: '効果検証・ユーザテスト',
+    duration: '1〜2ヶ月',
+    description: '身体特性や使える動きの異なるユーザーにプロトタイプを使っていただき、操作負担・精度・習熟速度・主観評価を検証します。操作できる作業の範囲も確認し、導入判断につなげます。',
+    deliverable: '検証結果・導入判断材料',
+    activities: ['被験者実験の設計・実施', '操作精度・習熟曲線の定量分析', '主観評価アンケート・統計解析'],
+  },
+  {
+    number: '04',
+    title: '本開発・システム統合',
+    duration: '要相談',
+    description: 'PoC検証結果をもとに、お客様の既存システムへの統合・量産設計を進めます。運用開始後のサポートも継続的に提供します。',
+    deliverable: '製品版モジュール・統合ドキュメント',
+    activities: ['量産向け基板・筐体設計', '既存システムとのAPI/通信統合', '運用マニュアル・保守体制構築'],
+  },
+];
+
+const capabilities = [
+  {
+    title: 'インタラクション設計',
+    description: 'UIST・SIGGRAPH・CHI・IEEE VRなどのトップカンファレンスで発表を重ねたHCI/VR研究者が、人とデジタルの最適な接点をデザイン。操作性・直感性・習熟しやすさを経験と知識に基づいて設計します。',
+  },
+  {
+    title: 'ハードウェア・プロトタイピング',
+    description: 'センサ基板設計、3Dプリント筐体、組み込みファームウェアまで一気通貫。アイデアから触れるプロトタイプまでつなげます。',
+  },
+  {
+    title: 'VR/物理シミュレーション',
+    description: 'Unity・物理エンジンを用いて操作対象をバーチャルに再現。実機がなくても操作感やインタラクションを検証できる環境を構築します。',
+  },
+  {
+    title: '力入力と動きによる触覚設計',
+    description: 'この身体性インタフェースは、モーター等で力を直接返すのではなく、指先の力入力と画面内の動きの対応関係（マッピング）によって、重さ・硬さなどの触覚知覚をつくります。',
+    href: '/products/#haptic-mapping',
+    linkLabel: '触覚知覚のしくみを図で見る',
+  },
+  {
+    title: 'ユーザ実験・定量評価',
+    description: 'HCI研究の実験設計ノウハウで、操作精度・習熟速度・主観評価を科学的に計測。導入判断に使えるエビデンスを提供します。',
+  },
+  {
+    title: '共同研究・論文化',
+    description: 'プロジェクトの成果を学術論文として発表可能。共同研究・共著の形でお客様の技術ブランディングにも貢献します。',
+  },
+];
+
+const useCases = [
+  {
+    id: 'remote-ops',
+    label: '遠隔操作・ロボティクス',
+    title: '身体特性に合わせた遠隔操作インタフェースの設計',
+    description: '重機・ロボット・ドローンなどの遠隔操作UIを、身体特性や使える動きに合わせて設計。大きな身体動作を必要としない力入力と動きのマッピングで、遠隔作業に参加できる人を広げることを目指します。操作負担・精度・習熟のしやすさをPoCで検証します。',
+    examples: ['身体特性に合わせた建設重機の遠隔操作UI', '産業ロボットの操作インタフェース', '災害対応ロボットの直感的操縦'],
+  },
+  {
+    id: 'xr',
+    label: 'XR・メタバース',
+    title: 'VR/AR空間の身体的インタラクション',
+    description: 'VR・AR・メタバース空間におけるユーザーの身体体験を設計。物理法則に基づくインタラクション、アバタ制御、触覚提示により、没入感と操作感を両立します。',
+    examples: ['VRアトラクション・体験施設', 'メタバース上のフィジカルなコラボレーション', 'バーチャルトレーニング・教育'],
+  },
+  {
+    id: 'accessibility',
+    label: 'アクセシビリティ・福祉',
+    title: '身体的制約を超えるインタフェース',
+    description: '大きな身体動作に頼らず、使える動きや力に合わせてアバタ・機械を操作する方法を設計。身体特性に応じて参加できる作業や活動を広げることを目指します。',
+    examples: ['遠隔就労に向けた操作インタフェース', '一人ひとりの身体特性に合わせた入力デバイス', '動きと手応えを結びつけるフィードバック設計'],
+  },
+  {
+    id: 'rd',
+    label: '研究開発支援',
+    title: 'HCI/触覚研究のR&Dパートナー',
+    description: '自社でHCI・触覚・VR領域の研究開発を行いたい企業に、実験設計・プロトタイプ開発・論文化まで一貫した研究パートナーシップを提供します。',
+    examples: ['新規入力デバイスの共同研究', '触覚提示技術の評価・改善', 'ユーザスタディの設計・実施・分析'],
+  },
+];
+
+const reasons = [
+  { title: 'インタラクションは、触らないとわからない。', description: '操作感やフィードバックの価値は、スペック表では伝わりません。実際に動くものに触れることで、導入効果を判断できます。' },
+  { title: '課題ごとに、最適解が異なる。', description: '操作対象、ユーザー特性、環境条件に応じたインタフェースの設計が必要です。実際の使い方を確かめながら、適した仕様を探ります。' },
+  { title: '小さく始めて、データで判断する。', description: '操作精度・習熟速度・ユーザ満足度を定量計測し、投資判断の材料を提供します。段階を踏んで検証しながら、次の開発へ進めます。' },
+];
+const pocValues = ['操作精度・習熟速度の定量データ', 'お客様の操作環境で動くプロトタイプ', '導入効果レポート（社内稟議に使用可）', '本開発に向けた要件定義・見積もり', '共同研究・論文化の可能性検討'];
+const caseLabels = ['REMOTE OPERATION', 'XR & METAVERSE', 'ACCESSIBILITY', 'RESEARCH & DEVELOPMENT'];
+---
+
+<BaseLayout title="Solutions | うつしみ" description="貸出・共同研究・開発委託を通じて、課題整理からPoC開発、効果検証、システム統合まで。うつしみはお客様の課題に合わせたソリューションを共同開発します。">
+  <main id="main-content">
+    <section class="page-heading solutions-hero">
+      <div class="site-shell">
+        <p class="eyebrow">SOLUTIONS / CO-DEVELOPMENT</p>
+        <h1 class="heading-xl">課題の整理から、<br /><span>動くプロトタイプまで。</span></h1>
+        <div class="hero-bottom"><p class="lead muted">HCI・触覚・VR分野の研究者と、ハードウェア・ソフトウェアのプロトタイピング力を兼ね備えたチームが、お客様の課題に向き合います。<br />「まず試してみたい」から、一緒に始められます。</p><a class="button" href="/contact/">共同開発について相談する <span aria-hidden="true">→</span></a></div>
+        <nav class="page-index" aria-label="ソリューションページ内のナビゲーション"><a href="#engagement"><span>01</span> 提供形態</a><a href="#use-cases"><span>02</span> 適用領域</a><a href="#process"><span>03</span> 進め方</a><a href="#capabilities"><span>04</span> 提供できること</a><a href="#why-poc"><span>05</span> PoCの価値</a></nav>
+      </div>
+    </section>
+
+    <section class="section section-rule engagement-section" id="engagement" aria-labelledby="engagement-title">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">01 / ENGAGEMENT</p><h2 class="heading-lg" id="engagement-title">目的に合わせた、<br />3つの提供形態。</h2><p class="lead muted">現在は、貸出・共同研究・開発委託に対応しています。<br />身体性インタフェースの販売は行っていません。</p></div>
+        <div class="engagement-grid">{engagementModels.map((model, i) => (<article class="engagement-card"><span class="engagement-number">0{i + 1}</span><h3>{model.title}</h3><p class="muted">{model.description}</p></article>))}</div>
+      </div>
+    </section>
+
+    <section class="section section-rule" id="use-cases">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">02 / USE CASES</p><h2 class="heading-lg">人とデジタルの接点を、<br />さまざまな現場へ。</h2><p class="lead muted">身体性プラットフォームとして、幅広い領域への展開を進めています。お客様の対象機器・操作環境に合わせて、PoCのテーマを設計します。</p></div>
+        <div class="use-case-list">{useCases.map((useCase, i) => (<article class="use-case" id={useCase.id}><div class="use-case-number">0{i + 1}</div><div class="use-case-main"><p class="eyebrow">{caseLabels[i]}</p><p class="use-case-label">{useCase.label}</p><h3>{useCase.title}</h3><p class="muted">{useCase.description}</p></div><div class="use-case-examples"><p>PoC テーマ例</p><ul>{useCase.examples.map(example => <li>{example}</li>)}</ul><a class="text-link" href="/contact/">この領域を相談する <span aria-hidden="true">→</span></a></div></article>))}</div>
+      </div>
+    </section>
+
+    <section class="section surface" id="process">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">03 / HOW WE WORK</p><h2 class="heading-lg">相談から、検証、実装へ。<br />4つのステップで進めます。</h2><p class="lead muted">初回のヒアリングで、課題とゴールを共有。<br />動くプロトタイプで確かめた結果を、導入判断と次の開発につなげます。</p></div>
+        <ol class="process-overview" aria-label="プロジェクト全体の流れ">{processSteps.map(step => (<li><span>{step.number}</span><a href={`#process-${step.number}`}>{step.title}</a></li>))}</ol>
+        <div class="process-grid">{processSteps.map(step => (<article class="process-card" id={`process-${step.number}`}><div class="process-card-top"><span class="step-number">{step.number}</span><span class="duration">目安：{step.duration}</span></div><h3>{step.title}</h3><p class="muted">{step.description}</p><ul class="process-activities">{step.activities.map(activity => <li>{activity}</li>)}</ul><div class="deliverable"><span>成果物</span><p>{step.deliverable}</p></div></article>))}</div>
+        <p class="process-note">期間は目安です。課題や検証範囲、既存システムとの連携内容に応じてご相談します。</p>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">04 / CAPABILITIES</p><h2 class="heading-lg">設計し、つくり、<br />人が使って確かめる。</h2><p class="lead muted">インタラクション設計からハードウェア試作、ソフトウェア開発、ユーザ評価まで。人とデジタルの接点を、研究と開発の両面から支えます。</p></div>
+        <div class="capability-grid">{capabilities.map((capability, i) => (<article class="capability"><span class="capability-number">0{i + 1}</span><h3>{capability.title}</h3><p class="muted">{capability.description}</p>{capability.href && <a class="text-link" href={capability.href}>{capability.linkLabel}<span aria-hidden="true">→</span></a>}</article>))}</div>
+      </div>
+    </section>
+
+    <section class="section surface" id="why-poc">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">05 / WHY PoC FIRST</p><h2 class="heading-lg">触れて、確かめることが、<br />次の判断につながる。</h2></div>
+        <div class="poc-grid"><div class="poc-reasons">{reasons.map((reason, i) => (<article><span>0{i + 1}</span><div><h3>{reason.title}</h3><p class="muted">{reason.description}</p></div></article>))}</div><aside class="poc-values"><p class="eyebrow">PoC VALUE</p><h3>PoCで得られるもの</h3><ul>{pocValues.map(value => <li><span aria-hidden="true">＋</span>{value}</li>)}</ul><p class="muted">初回のヒアリングは無料です。お客様の課題に対して身体性インタフェースがどう活かせるか、デモを交えてお話しします。</p><a href="/contact/" class="button">まずは相談する <span aria-hidden="true">→</span></a></aside></div>
+      </div>
+    </section>
+    <ContactBand />
+  </main>
+</BaseLayout>
+
+<style>
+  .solutions-hero { padding-bottom: 0; }.solutions-hero h1 { margin-top: 25px; max-width: 1120px; }.solutions-hero h1 > span { color: var(--color-brand); }
+  .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 65px; margin-top: 35px; }.hero-bottom > p { max-width: 780px; }.hero-bottom > .button { flex-shrink: 0; }
+  .page-index { display: flex; flex-wrap: wrap; gap: 38px; padding-block: 27px; border-top: 1px solid var(--color-border); margin-top: 54px; }.page-index > a { display: inline-flex; align-items: center; gap: 14px; font-size: 14px; }.page-index > a > span { font: 12px 'Sora Variable',sans-serif; color: var(--color-brand); }.page-index > a:hover { color: var(--color-brand); }
+  .section-heading { max-width: 940px; }.section-heading > h2 { margin-top: 21px; }.section-heading > .lead { max-width: 850px; margin-top: 24px; }
+  .engagement-section { padding-block: 64px; }.engagement-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; }.engagement-card { border-top: 1px solid var(--color-border-strong); padding-top: 24px; }.engagement-number { font: 12px 'Sora Variable',sans-serif; color: var(--color-brand); }.engagement-card h3 { font-size: var(--size-subheading, 24px); margin-top: 15px; }.engagement-card p { font-size: var(--size-description, 16px); line-height: var(--line-description, 2); margin-top: 16px; }.capability > .text-link { margin-top: 18px; gap: 12px; }
+  .use-case-list { margin-top: 48px; border-top: 1px solid #9daec3; }.use-case { display: grid; grid-template-columns: 44px 1.55fr 1fr; gap: 32px; padding: 43px 0; border-bottom: 1px solid #d1dbe6; scroll-margin-top: 130px; }.use-case-number { font: 17px/1.6 'Sora Variable',sans-serif; color: var(--color-brand); }.use-case-label { margin-top: 9px; color: var(--color-text-secondary); font-size: var(--size-label, 14px); }.use-case-main h3 { margin-top: 19px; max-width: 590px; font-size: var(--size-subheading, 27px); line-height: var(--line-subheading, 1.65); font-weight: 550; letter-spacing: -.03em; }.use-case-main > .muted { margin-top: 20px; font-size: 16px; line-height: 2.05; max-width: 640px; }
+  .use-case-examples { background: var(--color-surface-alt); border: 1px solid #dfe5ed; padding: 25px 28px; border-radius: 4px; align-self: start; }.use-case-examples > p { color: var(--color-brand); font-size: var(--size-description, 13px); font-weight: 500; }.use-case-examples > ul { list-style: none; padding: 0; margin: 17px 0 24px; }.use-case-examples li { position: relative; padding-left: 16px; font-size: 16px; line-height: 1.85; margin-top: 13px; }.use-case-examples li::before { content: ''; position: absolute; top: .8em; left: 0; width: 4px; height: 4px; background: var(--color-brand); }
+  .process-overview { list-style: none; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 24px; padding: 0; margin: 43px 0 33px; }.process-overview li { display: flex; align-items: start; gap: 14px; border-top: 1px solid #9aaec7; padding-top: 19px; }.process-overview li > span { font: 12px/1.9 'Sora Variable',sans-serif; color: var(--color-brand); }.process-overview a { font-size: 14px; line-height: 1.8; }.process-overview a:hover { color: var(--color-brand); }
+  .process-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }.process-card { background: var(--color-surface); border: 1px solid #d5deea; border-radius: 5px; padding: 35px; display: flex; flex-direction: column; scroll-margin-top: 130px; }.process-card-top { display: flex; gap: 20px; align-items: center; justify-content: space-between; }.step-number { color: var(--color-brand); font: 30px/1.3 'Sora Variable',sans-serif; }.duration { color: var(--color-text-secondary); font-size: 14px; }.process-card h3 { font-size: var(--size-subheading, 24px); font-weight: 550; line-height: var(--line-subheading, 1.65); margin-top: 27px; }.process-card > .muted { font-size: 16px; line-height: 2; margin-top: 17px; }.process-activities { padding: 0; margin: 23px 0 27px; list-style: none; }.process-activities li { font-size: 16px; line-height: 1.9; padding-left: 19px; position: relative; margin-top: 9px; }.process-activities li::before { content: '＋'; position: absolute; color: var(--color-brand); left: 0; top: 0; font-size: 13px; }.deliverable { border-top: 1px solid var(--color-border); padding-top: 18px; margin-top: auto; }.deliverable > span { color: var(--color-brand); font-size: 12px; }.deliverable > p { font-size: var(--size-description, 16px); line-height: var(--line-description, 1.9); margin-top: 6px; }.process-note { font-size: 14px; color: var(--color-text-secondary); margin-top: 25px; }
+  .capability-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 36px; margin-top: 48px; }.capability { border-top: 1px solid #aebdce; padding-top: 24px; }.capability-number { font: 12px 'Sora Variable',sans-serif; color: var(--color-brand); }.capability h3 { font-size: var(--size-subheading, 22px); font-weight: 550; line-height: var(--line-subheading, 1.65); margin-top: 21px; letter-spacing: -.03em; }.capability p { font-size: var(--size-description, 16px); line-height: var(--line-description, 2); margin-top: 18px; }
+  .poc-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 75px; align-items: start; margin-top: 45px; }.poc-reasons article { display: grid; grid-template-columns: 25px 1fr; gap: 20px; border-top: 1px solid #bcc9d9; padding: 27px 0; }.poc-reasons article > span { color: var(--color-brand); font: 12px/2 'Sora Variable',sans-serif; }.poc-reasons h3 { font-size: var(--size-subheading, 21px); line-height: var(--line-subheading, 1.75); font-weight: 550; }.poc-reasons p { font-size: var(--size-description, 16px); line-height: var(--line-description, 2); margin-top: 13px; }.poc-values { background: var(--color-surface); border: 1px solid #d2dce8; padding: 33px; border-radius: 5px; }.poc-values > h3 { font-size: var(--size-subheading, 26px); line-height: var(--line-subheading, 1.65); font-weight: 550; margin-top: 18px; }.poc-values ul { list-style: none; padding: 0; margin: 25px 0; border-top: 1px solid #d2dce8; }.poc-values li { display: flex; gap: 13px; font-size: 16px; line-height: 1.9; padding: 16px 0; border-bottom: 1px solid #e0e6ed; }.poc-values li > span { color: var(--color-brand); }.poc-values > .muted { font-size: 16px; line-height: 2; }.poc-values > .button { margin-top: 25px; }
+  @media(max-width: 1100px) { .hero-bottom { gap: 35px; flex-wrap: wrap; }.hero-bottom > p { max-width: 850px; }.use-case { grid-template-columns: 32px 1.3fr 1fr; gap: 22px; }.use-case-examples { padding: 24px; }.use-case-main h3 { font-size: var(--size-subheading, 24px); }.process-card { padding: 28px; }.process-card h3 { font-size: var(--size-subheading, 22px); }.capability-grid { grid-template-columns: 1fr 1fr; gap: 32px; }.poc-grid { gap: 40px; grid-template-columns: 1.1fr 1fr; }.poc-values { padding: 26px; } }
+  @media(max-width: 800px) { .solutions-hero h1 { font-size: var(--size-title, clamp(24px, 7.8vw, 40px)); margin-top: 20px; }.hero-bottom { margin-top: 26px; gap: 27px; }.page-index { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 10px; margin-top: 35px; padding-block: 25px; }.page-index > a { font-size: 13px; gap: 10px; }.section-heading > h2 { margin-top: 18px; }.section-heading > .lead { margin-top: 20px; }.use-case-list { margin-top: 32px; }.use-case { grid-template-columns: 22px 1fr; gap: 16px; padding-block: 29px; }.use-case-number { font-size: 13px; }.use-case-label { font-size: 13px; }.use-case-main h3 { font-size: var(--size-subheading, 23px); margin-top: 16px; }.use-case-main > .muted { margin-top: 16px; }.use-case-examples { grid-column: 2; padding: 21px; margin-top: 8px; }.use-case-examples li { font-size: 16px; }.process-overview { grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }.process-overview li { padding-top: 14px; gap: 10px; }.process-overview a { font-size: 13px; }.process-grid { grid-template-columns: 1fr; gap: 20px; }.process-card { padding: 25px; }.process-card h3 { font-size: var(--size-subheading, 22px); margin-top: 23px; }.process-card > .muted { margin-top: 15px; }.step-number { font-size: 27px; }.duration { font-size: 13px; }.process-activities { margin-top: 18px; }.process-note { font-size: 13px; }.capability-grid { grid-template-columns: 1fr; gap: 31px; margin-top: 32px; }.capability h3 { margin-top: 17px; font-size: var(--size-subheading, 21px); }.capability p { margin-top: 14px; }.poc-grid { grid-template-columns: 1fr; gap: 23px; margin-top: 30px; }.poc-reasons article { gap: 14px; padding-block: 24px; }.poc-reasons h3 { font-size: var(--size-subheading, 20px); }.poc-values { padding: 25px; }.poc-values > h3 { font-size: var(--size-subheading, 24px); }.poc-values li { font-size: 16px; } }
+  @media(max-width: 360px) { .use-case { grid-template-columns: 18px 1fr; gap: 12px; }.use-case-examples { padding: 18px; }.process-card { padding: 20px; }.process-card h3 { font-size: var(--size-subheading, 20px); }.page-index > a { font-size: 12px; gap: 7px; }.poc-values { padding: 20px; } }
+</style>
+
+<style>
+  @media(max-width:760px) { .solutions-hero h1 > span { display: inline-block; max-width: 100%; text-wrap: balance; } }
+  @media(max-width:800px) { .engagement-section { padding-block: 48px; }.engagement-grid { grid-template-columns: 1fr; gap: 28px; }.engagement-card { padding-top: 20px; }.engagement-card h3 { font-size: var(--size-subheading, 22px); margin-top: 12px; }.engagement-card p { margin-top: 12px; } }
+</style>

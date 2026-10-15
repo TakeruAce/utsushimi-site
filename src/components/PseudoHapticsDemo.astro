@@ -1,0 +1,97 @@
+<section class="pseudo-demo" id="pseudo-haptics-demo" data-pseudo-demo aria-labelledby="pseudo-demo-title">
+  <div class="demo-heading">
+    <p class="eyebrow">TRY PSEUDO-HAPTICS</p>
+    <h3 id="pseudo-demo-title">場所が変わると、<br class="mobile-break" />手応えが変わる。</h3>
+    <p id="pseudo-demo-instructions">左右にドラッグして、中央の「粘り」エリアを通り抜けてください。遅れてついてくる動きを感じてみましょう。左右キーでも操作できます。</p>
+  </div>
+
+  <div class="interactive-demo" data-demo-interactive hidden>
+    <div class="play-surface" data-play-surface tabindex="0" role="group" aria-label="疑似触覚の体験エリア" aria-describedby="pseudo-demo-instructions pseudo-demo-keys">
+      <div class="surface-caption"><span>動かしたまま、違いを感じる。</span><span>DRAG ACROSS</span></div>
+      <div class="zone-track" aria-hidden="true">
+        <div class="viscous-zone"></div>
+        <div class="zone-label zone-label--left">そのまま</div>
+        <div class="zone-label zone-label--center">粘り</div>
+        <div class="zone-label zone-label--right">そのまま</div>
+        <div class="track-line"></div>
+      </div>
+      <div class="object-position" data-demo-object aria-hidden="true">
+        <svg viewBox="0 0 96 108" fill="none"><ellipse cx="48" cy="96" rx="34" ry="6" fill="var(--color-brand)" opacity=".1" /><path d="m48 7 36 20-36 20-36-20L48 7Z" fill="var(--color-brand-pale)"/><path d="M12 27 48 47v43L12 70V27Z" fill="var(--color-brand)"/><path d="m48 47 36-20v43L48 90V47Z" fill="color-mix(in srgb, var(--color-brand) 55%, var(--color-surface))"/><path d="m48 7 36 20v43L48 90 12 70V27L48 7Z M12 27l36 20 36-20 M48 47v43" stroke="var(--color-brand-hover)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="drag-hint" aria-hidden="true"><span>←</span><span>つかんで、中央のエリアの向こうへ</span><span>→</span></p>
+    </div>
+    <div class="play-footer">
+      <p class="current-feel"><span class="feel-dot" aria-hidden="true"></span><span data-mode-label>そのまま</span><span class="keyboard-hint" id="pseudo-demo-keys">左右キーで移動、Shiftで速く、Homeで最初の位置へ。</span></p>
+      <button type="button" class="reset-position" data-reset-position>はじめの位置に戻す <span aria-hidden="true">↺</span></button>
+    </div>
+    <p class="reduced-note" data-reduced-note hidden>端末の「動きを減らす」設定に合わせ、追従の遅れを省略し、移動量の違いだけを表示しています。</p>
+    <p class="visually-hidden" data-demo-status role="status" aria-live="polite" aria-atomic="true"></p>
+  </div>
+
+  <div class="demo-fallback" data-demo-fallback>
+    <p>左右は手の動きにそのまま追従し、中央では移動量が少し小さくなり、遅れて追いかけるように動きます。場所によって動きとの対応を変える、疑似触覚の体験です。</p>
+    <p>JavaScriptを有効にすると、ドラッグして違いを試せます。</p>
+  </div>
+  <p class="demo-note">マウスや指の移動を使った疑似触覚の体験です。身体性インタフェースの力入力を再現するものではなく、感じ方には個人差があります。</p>
+</section>
+
+<script>
+  import { initializePseudoHaptics } from '../scripts/pseudoHaptics';
+  document.querySelectorAll<HTMLElement>('[data-pseudo-demo]').forEach(initializePseudoHaptics);
+</script>
+
+<style>
+  .pseudo-demo { margin-top: 32px; border: 1px solid var(--color-border); background: var(--color-surface); }
+  .demo-heading { padding: 30px 32px 28px; }
+  .demo-heading h3 { margin-top: 10px; font-size: var(--size-subheading, 28px); line-height: var(--line-subheading, 1.6); letter-spacing: -.035em; }
+  .demo-heading > p:last-child { margin-top: 14px; font-size: 16px; color: var(--color-text-secondary); }
+  .mobile-break { display: none; }
+  .play-surface { --object-size: 96px; position: relative; height: 340px; overflow: hidden; border-top: 1px solid var(--color-border); background: var(--color-surface-alt); background-image: radial-gradient(var(--color-border) .8px, transparent .8px); background-size: 22px 22px; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+  .play-surface[data-dragging='true'] { cursor: none; }
+  .play-surface:focus-visible { outline-offset: -5px; }
+  .surface-caption { display: flex; justify-content: space-between; gap: 16px; position: absolute; inset: 20px 24px auto; z-index: 1; pointer-events: none; font-size: 12px; color: var(--color-text-secondary); }
+  .surface-caption > span:last-child { font: 10px/2 var(--font-display); letter-spacing: .06em; }
+  .zone-track { position: absolute; inset: 0 calc(var(--object-size) / 2); pointer-events: none; }
+  .viscous-zone { position: absolute; top: 0; bottom: 0; left: var(--zone-start, 34%); width: var(--zone-width, 32%); border-inline: 1px dashed color-mix(in srgb, var(--color-brand) 55%, var(--color-border-strong)); background: var(--color-brand-pale); background-image: repeating-linear-gradient(115deg, transparent 0 12px, color-mix(in srgb, var(--color-brand) 5%, transparent) 12px 13px); transition: background-color 160ms ease; }
+  .play-surface[data-zone='viscous'] .viscous-zone { background-color: color-mix(in srgb, var(--color-brand) 10%, var(--color-brand-pale)); }
+  .zone-label { position: absolute; top: 76px; transform: translateX(-50%); font-size: var(--size-label, 14px); color: var(--color-text-secondary); }
+  .zone-label--left { left: 17%; }.zone-label--center { left: 50%; color: var(--color-brand); font-weight: 600; letter-spacing: .12em; }.zone-label--right { left: 83%; }
+  .track-line { position: absolute; left: 0; right: 0; top: 66%; border-top: 1px solid var(--color-border-strong); }
+  .track-line::before,.track-line::after { content: ''; position: absolute; width: 1px; height: 9px; background: var(--color-border-strong); top: -5px; }
+  .track-line::before { left: 0; }.track-line::after { right: 0; }
+  .object-position { position: absolute; left: 0; top: calc(66% - var(--object-size)); width: var(--object-size); height: calc(var(--object-size) * 1.125); transform: translateX(var(--object-x, 100px)); pointer-events: none; }
+  .object-position svg { display: block; width: 100%; height: 100%; }
+  .drag-hint { position: absolute; bottom: 23px; left: 16px; right: 16px; display: flex; align-items: center; justify-content: center; gap: 22px; color: var(--color-text-secondary); font-size: 13px; pointer-events: none; }
+  .drag-hint > span:first-child,.drag-hint > span:last-child { font-size: 21px; color: var(--color-brand); }
+  .play-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px 20px; padding: 12px 24px; border-top: 1px solid var(--color-border); }
+  .current-feel { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; font-size: 13px; color: var(--color-text-secondary); }
+  .feel-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-text-tertiary); }
+  .pseudo-demo:has([data-zone='viscous']) .feel-dot { background: var(--color-brand); }
+  .current-feel > [data-mode-label] { min-width: 4em; }
+  .keyboard-hint { margin-left: 10px; font-size: 12px; }
+  .reset-position { border: 0; padding: 8px 0; min-height: 44px; background: none; font-size: 13px; color: var(--color-brand); }
+  .reset-position > span { margin-left: 10px; }
+  .reduced-note { padding: 0 24px 18px; font-size: 12px; color: var(--color-text-secondary); }
+  .demo-note { border-top: 1px solid var(--color-border); padding: 18px 32px; font-size: 12px; line-height: 1.9; color: var(--color-text-secondary); }
+  .demo-fallback { padding: 26px 32px; border-top: 1px solid var(--color-border); background: var(--color-brand-pale); }
+  .demo-fallback p + p { margin-top: 14px; font-size: var(--size-description, 14px); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media(max-width: 600px) {
+    .pseudo-demo { margin-top: 24px; }
+    .demo-heading { padding: 24px 20px; }
+    .demo-heading h3 { font-size: var(--size-subheading, 22px); }
+    .demo-heading > p:last-child { font-size: 14px; margin-top: 12px; }
+    .mobile-break { display: initial; }
+    .play-surface { --object-size: 64px; height: 275px; }
+    .surface-caption { inset: 16px 16px auto; font-size: 11px; gap: 8px; }
+    .surface-caption > span:last-child { display: none; }
+    .zone-label { top: 65px; font-size: var(--size-label, 12px); white-space: nowrap; }
+    .drag-hint { bottom: 16px; gap: 12px; font-size: 11px; }
+    .play-footer { padding: 12px 16px; }
+    .current-feel { width: 100%; }
+    .keyboard-hint { margin-left: auto; font-size: 10px; }
+    .demo-note,.demo-fallback { padding: 18px 20px; }
+    .reduced-note { padding-inline: 16px; }
+  }
+  @media(prefers-reduced-motion: reduce) { .viscous-zone { transition: none; } }
+</style>

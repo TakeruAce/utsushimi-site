@@ -1,0 +1,18 @@
+<section class="contact-band" aria-labelledby="contact-band-title">
+  <div class="site-shell contact-band-inner">
+    <div><p class="contact-label">LET’S BUILD TOGETHER</p><h2 id="contact-band-title">次の可能性を、<br />一緒につくりませんか。</h2><p class="contact-copy">技術デモのご依頼から、共同研究・開発のご相談まで。<br class="desktop-break" />課題やアイデアの段階から、お聞かせください。</p></div>
+    <a class="contact-button" href="/contact/"><span>共同開発・導入のご相談</span><span aria-hidden="true">→</span></a>
+  </div>
+</section>
+<style>
+  .contact-band { background: var(--color-brand); color: white; }
+  .contact-band-inner { display: grid; grid-template-columns: 1.5fr 1fr; align-items: end; gap: 64px; padding-block: 80px; }
+  .contact-label { font: 500 12px/1.7 var(--font-display); letter-spacing: .08em; color: #dbe7ff; font-size: var(--size-label, 12px); }
+  h2 { margin-top: 24px; font-size: var(--size-heading, clamp(30px, 3vw, 42px)); line-height: var(--line-heading, 1.55); letter-spacing: -.045em; }
+  .contact-copy { margin-top: 24px; font-size: 15px; line-height: 2; color: #e3ecff; }
+  .contact-button { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 68px; padding: 20px 24px; background: white; color: var(--color-brand); border: 1px solid white; border-radius: var(--radius-control); font-size: 15px; font-weight: 550; margin-bottom: 8px; transition: background var(--motion-fast); }
+  .contact-button:hover { background: var(--color-brand-pale); }.contact-button:focus-visible { outline-color: white; }
+  .contact-button>span:last-child { font-size: 26px; line-height: 1; }
+  @media(max-width:950px) { .contact-band-inner { gap: 40px; grid-template-columns: 1.3fr 1fr; }.contact-button { font-size: 14px; padding-inline: 20px; gap: 16px; }.desktop-break { display: none; } }
+  @media(max-width:760px) { .contact-band-inner { grid-template-columns: 1fr; padding-block: 56px; gap: 32px; } h2 { font-size: var(--size-heading, 30px); }.contact-copy { font-size: 16px; }.contact-button { width: 100%; max-width: 420px; margin: 0; } }
+</style>

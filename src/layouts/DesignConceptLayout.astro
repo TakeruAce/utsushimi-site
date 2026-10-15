@@ -1,0 +1,55 @@
+---
+import SiteIcons from '../components/SiteIcons.astro';
+import '@fontsource-variable/sora';
+import '@fontsource-variable/noto-sans-jp';
+import '../styles/site-settings.css';
+interface Props { title: string; concept?: 'product' | 'editorial' | 'precision' }
+const { title, concept } = Astro.props;
+const concepts = [
+  { id: 'product', label: 'A — Product' },
+  { id: 'editorial', label: 'B — Editorial' },
+  { id: 'precision', label: 'C — Precision' },
+];
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{title} | Utsushimi Design Study</title>
+    <SiteIcons />
+    <script is:inline>if (new URLSearchParams(location.search).get('embed') === '1') document.documentElement.dataset.embed = 'true';</script>
+  </head>
+  <body>
+    <nav class="study-toolbar" aria-label="デザイン案の比較">
+      <a class="study-home" href="/design-lab/">Utsushimi <span>DESIGN STUDY</span></a>
+      <div class="study-options">
+        {concepts.map(item => <a href={`/design-lab/${item.id}/`} aria-current={concept === item.id ? 'page' : undefined}>{item.label}</a>)}
+        <a class="study-original" href="/">現行サイト ↗</a>
+      </div>
+    </nav>
+    <slot />
+  </body>
+</html>
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Noto Sans JP Variable', sans-serif; -webkit-font-smoothing: antialiased; }
+  h1,h2,h3,h4,p,figure { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  button,input,select { font: inherit; }
+  img,video { display: block; max-width: 100%; }
+  :focus-visible { outline: 3px solid #a63b20; outline-offset: 5px; }
+  .study-toolbar { min-height: 48px; background: #232321; color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 26px; gap: 20px; font: 11px 'Sora Variable', sans-serif; }
+  .study-home { font-size: 15px; font-weight: 650; display: flex; align-items: center; gap: 14px; white-space: nowrap; }
+  .study-home span { color: #c1c1b9; font-size: 9px; letter-spacing: .13em; font-weight: 400; }
+  .study-options { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .study-options a { padding: 10px 12px; color: #c8c8c2; white-space: nowrap; }
+  .study-options a[aria-current] { background: #44443f; border-radius: 4px; color: #fff; }
+  .study-options a:hover { color: #fff; background: #393935; }
+  .study-original { margin-left: 14px; }
+  html[data-embed='true'] .study-toolbar { display: none; }
+  @media(max-width: 780px) { .study-toolbar { padding: 7px 14px; flex-wrap: wrap; gap: 5px; } .study-home { width: 100%; } .study-options { width: 100%; justify-content: space-between; } .study-options a { font-size: 10px; padding: 9px 5px; } .study-original { margin-left: 0; } }
+  @media(prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *,*::before,*::after { animation: none !important; transition: none !important; } }
+</style>

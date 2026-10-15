@@ -1,0 +1,65 @@
+---
+interface Props {
+  formUrl: string;
+}
+
+const { formUrl } = Astro.props;
+let publicUrl: URL;
+try {
+  publicUrl = new URL(formUrl.trim());
+} catch {
+  throw new Error('GoogleContactForm requires a published Google Forms viewform URL.');
+}
+
+// Accept only a public Google Forms page, never an editor or shortened URL.
+// Publication and visitor access must be verified before configuring this URL.
+if (
+  publicUrl.origin !== 'https://docs.google.com' ||
+  publicUrl.username || publicUrl.password ||
+  !/^\/forms\/d\/(?:e\/)?[A-Za-z0-9_-]+\/viewform\/?$/.test(publicUrl.pathname)
+) {
+  throw new Error('GoogleContactForm only accepts https://docs.google.com/forms/d/[e/]FORM_ID/viewform URLs.');
+}
+
+// Do not carry account selectors, prefilled answers, or tracking parameters into the embed.
+publicUrl.pathname = publicUrl.pathname.replace(/\/$/, '');
+publicUrl.search = '';
+publicUrl.hash = '';
+const externalUrl = publicUrl.href;
+const embeddedUrl = new URL(externalUrl);
+embeddedUrl.searchParams.set('embedded', 'true');
+---
+
+<div class="google-contact-form">
+  <p class="form-note" id="google-contact-notice">下のGoogleフォームからお問い合わせをお送りください。入力内容はGoogleのサービスを通じて受け付けます。</p>
+  <div class="form-help" id="google-contact-help">
+    <p>フォームが表示されない場合や、画面が狭く入力しづらい場合は、別タブで開いてご利用ください。</p>
+    <a class="text-link" href={externalUrl} target="_blank" rel="noopener noreferrer">Googleフォームを別タブで開く <span aria-hidden="true">↗</span></a>
+  </div>
+  <div class="form-frame">
+    <iframe
+      src={embeddedUrl.href}
+      title="うつしみ お問い合わせフォーム"
+      aria-describedby="google-contact-notice google-contact-help"
+      width="100%"
+      height="1120"
+      loading="lazy"
+      referrerpolicy="no-referrer"
+    ></iframe>
+  </div>
+  <p class="scroll-note">項目が続く場合は、フォーム内をスクロールしてください。</p>
+</div>
+
+<style>
+  .google-contact-form { min-width: 0; width: 100%; margin-top: 32px; }
+  .form-note, .form-help, .scroll-note { color: var(--color-text-secondary); font-size: 13px; line-height: 1.8; }
+  .form-help { margin-top: 16px; }
+  .form-help .text-link { margin-top: 10px; font-size: 13px; }
+  .form-frame { min-width: 0; margin-top: 24px; border: 1px solid var(--color-border); border-radius: var(--radius-control); background: var(--color-surface-elevated); }
+  iframe { display: block; width: 100%; max-width: 100%; height: 1120px; border: 0; border-radius: inherit; }
+  .scroll-note { margin-top: 10px; }
+  @media (max-width: 760px) {
+    .google-contact-form { margin-top: 24px; }
+    iframe { height: 1200px; }
+  }
+</style>

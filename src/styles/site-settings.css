@@ -1,0 +1,106 @@
+/*
+ * 共通の文字サイズ・行間・配色・ロゴ設定。
+ * initial は各コンポーネントのレスポンシブな初期値を使います。
+ * 固定値に変更すると、その種類の文字をサイト全体で変更できます。
+ * 元のAstroソースを編集し、生成された _astro/ 内のCSSは直接編集しません。
+ */
+:root {
+  /* ── 文字サイズ（pt）── */
+
+  /* 英語ラベル：WE ARE UTSUSHIMI、CHALLENGE、TECHNOLOGY、NEWSなど */
+  --size-label: 16pt; /* 例：16pt */
+
+  /* 大見出し：各ページのh1、トップ冒頭のメインコピー */
+  --size-title: initial; /* 例：36pt */
+
+  /* セクション見出し：h2。「人とデジタルのあいだに」など */
+  --size-heading: initial; /* 例：28pt */
+
+  /* 小見出し：h3。「操作の壁」「遠隔重機操作」など */
+  --size-subheading: initial; /* 例：18pt */
+
+  /* 導入文：会社紹介の文章、各セクションの見出し直下のリード文 */
+  --size-lead: initial; /* 例：13pt */
+
+  /* 説明文：3つの壁、活用分野、共同開発の各項目の説明など */
+  --size-description: initial; /* 例：12pt */
+
+  /* ── 行間（単位なし。2なら文字サイズの2倍）── */
+  --line-title: initial;
+  --line-heading: initial;
+  --line-subheading: initial;
+  --line-lead: initial; /* 例：1.9 */
+  --line-description: initial; /* 例：1.8 */
+
+  /* ブランドカラー：蘇芳。メイン・ホバー・淡い背景をまとめて設定 */
+  --color-brand: #88465b; /* ロゴ案と共通の、紫寄りの蘇芳 */
+  --color-brand-hover: #6e384a;
+  --color-brand-pale: #f5edf0;
+
+  /* 社名ロゴ：書体・太さ・字間・マークの上下位置 */
+  --brand-font-family: "Zen Kaku Gothic New";
+  --brand-font-weight: 700;
+  --brand-letter-spacing: 0.01em;
+  --brand-logo-offset-y: 3px; /* 正の値でマークを下へ */
+
+  /* 既存の製品・デジタル表現にも同じ配色を適用 */
+  --color-yubi-50: var(--color-brand-pale);
+  --color-yubi-100: #e8d8df;
+  --color-yubi-400: #a6677b;
+  --color-yubi-500: var(--color-brand);
+  --color-yubi-600: var(--color-brand-hover);
+  --color-yubi-700: #562c3a;
+  --color-digital-50: var(--color-brand-pale);
+  --color-digital-500: var(--color-brand);
+  --color-digital-600: var(--color-brand-hover);
+
+  /* 基本の3色：蘇芳（上のbrand）・濃紺・アイボリー */
+  --color-navy: #293c50;
+  --color-ivory: #f3efe5;
+
+  /* 本文・補足文：濃紺と、その濃淡 */
+  --color-text: var(--color-navy);
+  --color-text-secondary: #526172;
+  --color-text-tertiary: #586777;
+
+  /* 背景：アイボリーを基調に、面と線を濃淡で区別 */
+  --color-surface: var(--color-ivory);
+  --color-surface-alt: #e8e5df;
+  --color-surface-elevated: #faf7f0;
+  --color-border: #cbd0d2;
+  --color-border-strong: #8c98a3;
+}
+
+::selection { background: var(--color-yubi-100); color: var(--color-brand-hover); }
+
+@font-face {
+  font-family: "Zen Kaku Gothic New";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/zen-kaku-gothic-new/zen-kaku-gothic-new-700-utsushimi-v1.ttf") format("truetype");
+}
+
+/* 比較案とコーポレートサイトで共通のロゴ表現。 */
+.brand-symbol-c {
+  display: inline-block;
+  width: 46px;
+  height: 31px;
+  background-color: currentColor;
+  -webkit-mask: url("/images/utsushimi-logo-c-mask-20261009.png") center / contain no-repeat;
+  mask: url("/images/utsushimi-logo-c-mask-20261009.png") center / contain no-repeat;
+}
+/* 比較案の局所フォントより優先し、CSSのバンドル順序に依存させない。 */
+:root .brand-jp[class] {
+  font-family: var(--brand-font-family), "Noto Sans JP Variable", sans-serif;
+  font-weight: var(--brand-font-weight);
+  letter-spacing: var(--brand-letter-spacing);
+  line-height: 1;
+  align-items: center;
+}
+.brand-jp .brand-symbol-c {
+  transform: translateY(var(--brand-logo-offset-y));
+}
+@media (max-width: 760px) {
+  .brand-symbol-c { width: 39px; height: 27px; }
+}

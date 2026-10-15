@@ -1,0 +1,84 @@
+---
+import { Image } from 'astro:assets';
+import exhibition from '../assets/images/2026-10-14_exhibition-demo-crop-mosaic_v1.webp';
+import demoAudience from '../assets/images/gallery/IMG_6065.jpg';
+import makerDemo from '../assets/images/gallery/IMG_7802.jpg';
+import avatarDemo from '../assets/images/gallery/PXL_20240427_063920194.jpg';
+import vrDemo from '../assets/images/gallery/PXL_20240428_024805833.MP.jpg';
+import researchDiscussion from '../assets/images/gallery/img_9908.jpg';
+import nedoAward from '../assets/images/gallery/1731587127486.jpg';
+import siggraphAward from '../assets/images/gallery/1731587128046.jpg';
+import trophy from '../assets/images/gallery/1733474239904 (1).jpg';
+import presentation from '../assets/images/gallery/IMG_1575.jpg';
+import booth from '../assets/images/gallery/PXL_20241203_100842761.jpg';
+
+// Use the reviewed mosaic version above instead of the original DCEXPO photo.
+const rows = [
+  [
+    { src: exhibition, alt: '展示会でVRデモを体験する来場者と、説明する研究者' },
+    { src: makerDemo, alt: '指先力入力デバイスを使ったVRデモを見守る来場者' },
+    { src: demoAudience, alt: '研究ポスターの前でデモの説明を聞く来場者' },
+    { src: avatarDemo, alt: '指先力入力デバイスで画面内のアバタを操作する来場者' },
+    { src: researchDiscussion, alt: '研究ポスターを前に来場者と対話する研究者' },
+    { src: vrDemo, alt: '研究者の説明を聞きながらVRデモを体験する来場者' },
+  ],
+  [
+    { src: trophy, alt: 'SIGGRAPH Asia 2024の受賞トロフィーと指先力入力デバイス' },
+    { src: presentation, alt: 'SIGGRAPH Asia 2024でのデモ紹介の発表' },
+    { src: booth, alt: '指先力入力デバイスとVRヘッドセットを展示した研究ブース' },
+    { src: nedoAward, alt: 'DCEXPOでのNEDO賞授賞式' },
+    { src: siggraphAward, alt: 'DCEXPOでのSIGGRAPH Special Prize授賞式' },
+  ],
+];
+---
+
+<figure class="exhibition-gallery" data-exhibition-gallery>
+  <div class="gallery-wall">
+    {rows.map((photos, rowIndex) => (
+      <div class="gallery-row" tabindex="0" role="region" aria-label={rowIndex === 0 ? '展示会での体験・対話の写真' : '研究発表・受賞の写真'}>
+        <div class:list={['gallery-track', { 'gallery-track--reverse': rowIndex === 1 }]}>
+          {[false, true].map((duplicate) => (
+            <ul class:list={['gallery-group', { 'gallery-group--duplicate': duplicate }]} aria-hidden={duplicate ? 'true' : undefined}>
+              {photos.map((photo) => (
+                <li class="gallery-photo">
+                  <Image src={photo.src} alt={duplicate ? '' : photo.alt} width={960} widths={[320, 480, 640, 960]} sizes="(max-width: 800px) 240px, (max-width: 1600px) 320px, 20vw" loading="lazy" />
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+  <figcaption class="site-shell">展示会でのデモンストレーション・研究発表</figcaption>
+</figure>
+
+<style>
+  .exhibition-gallery { --gallery-gap: 10px; width: 100%; max-width: 100%; min-width: 0; margin: 50px 0 0; }
+  .gallery-wall { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--gallery-gap); }
+  .gallery-row { min-width: 0; overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; scrollbar-color: var(--color-border-strong) var(--color-surface); }
+  .gallery-row:focus-visible { outline: 2px solid var(--color-brand); outline-offset: -2px; }
+  .gallery-track { display: flex; width: max-content; }
+  .gallery-group { display: flex; flex: none; gap: var(--gallery-gap); padding: 0 var(--gallery-gap) 0 0; margin: 0; list-style: none; }
+  .gallery-group--duplicate { display: none; }
+  /* Five photos in the shorter row must cover even a very wide viewport. */
+  .gallery-photo { flex: none; width: max(320px, 20vw); aspect-ratio: 16 / 11; overflow: hidden; background: var(--color-surface-alt); }
+  .gallery-photo img { display: block; width: 100%; height: 100%; object-fit: cover; filter: saturate(.8); }
+  figcaption { padding-top: 14px; color: var(--color-text-secondary); font-size: 12px; line-height: 1.7; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gallery-row { overflow-x: hidden; }
+    .gallery-group--duplicate { display: flex; }
+    .gallery-track { animation: gallery-scroll 64s linear infinite; }
+    .gallery-track--reverse { animation-direction: reverse; animation-duration: 54s; }
+  }
+  @media (max-width: 800px) {
+    .exhibition-gallery { --gallery-gap: 8px; margin-top: 32px; }
+    .gallery-photo { width: 240px; aspect-ratio: 24 / 17; }
+    figcaption { padding-top: 12px; }
+  }
+  @keyframes gallery-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>

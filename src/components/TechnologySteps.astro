@@ -1,0 +1,110 @@
+---
+import { getImage } from 'astro:assets';
+import systemFlow from '../assets/images/system-flow.png';
+
+// The original research figure contains three panels. Reuse it without altering
+// the artwork; each SVG viewport shows the panel next to its own explanation.
+// Explicit clipping also hides neighboring arrows in the letterboxed margins.
+const flowImage = await getImage({ src: systemFlow, width: 2400, format: 'webp' });
+const steps = [
+  {
+    label: '01 / INPUT',
+    title: '指先の力を入力',
+    description: '片手7自由度の力入力を、指先のセンサで検出します。',
+    viewBox: '0 112 1266 990',
+    alt: '両手の指先に装着したセンサへ力を入力している様子',
+  },
+  {
+    label: '02 / COMPUTATION',
+    title: '関節トルクへ変換',
+    description: '逆動力学により、手足を動かす各関節のトルクを求めます。',
+    viewBox: '1385 112 1391 990',
+    alt: '入力した末端の力を、アバタの各関節を動かすトルクへ変換する図',
+  },
+  {
+    label: '03 / INTERACTION',
+    title: '全身と環境が相互作用',
+    description: '物理シミュレーション上で、押す・泳ぐ・登る動作へ。',
+    viewBox: '2883 112 1416 1000',
+    alt: '関節トルクで動く全身アバタが、環境内の物体を押している様子',
+  },
+];
+---
+
+<ol class="technology-steps" aria-label="指先の力から全身の動きまでの3つの工程">
+  {steps.map((step, index) => {
+    const [x, y, width, height] = step.viewBox.split(' ');
+    const clipId = `technology-panel-${index}`;
+    return (
+    <li>
+      <div class="step-visual">
+        <svg viewBox={step.viewBox} role="img" aria-label={step.alt} focusable="false">
+          <defs>
+            <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+              <rect x={x} y={y} width={width} height={height} />
+            </clipPath>
+          </defs>
+          <image href={flowImage.src} width={systemFlow.width} height={systemFlow.height} clip-path={`url(#${clipId})`} />
+        </svg>
+      </div>
+      <div class="step-copy">
+        <p class="step-label">{step.label}</p>
+        <h3>{step.title}</h3>
+        <p class="step-description">{step.description}</p>
+      </div>
+    </li>
+    );
+  })}
+</ol>
+
+<style>
+  .technology-steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 50px 0 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+  li { min-width: 0; border-left: 1px solid var(--color-border); }
+  li:first-child { border-left: 0; }
+  .step-visual {
+    aspect-ratio: 4 / 3;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border);
+    background: #fff;
+  }
+  svg { display: block; width: 100%; height: 100%; overflow: hidden; }
+  .step-copy { padding: 26px 28px 28px; }
+  .step-label {
+    color: var(--color-brand);
+    font: 500 12px/1.7 var(--font-display);
+    letter-spacing: .04em;
+  }
+  h3 {
+    margin-top: 12px;
+    font-size: var(--size-subheading, 20px);
+    font-weight: 600;
+    line-height: var(--line-subheading, 1.6);
+  }
+  .step-description {
+    margin-top: 10px;
+    color: var(--color-text-secondary);
+    font-size: var(--size-description, 16px);
+    line-height: var(--line-description, 1.8);
+  }
+  @media (max-width: 1150px) {
+    .step-copy { padding: 23px 20px; }
+    h3 { font-size: var(--size-subheading, 18px); }
+  }
+  @media (max-width: 800px) {
+    .technology-steps { grid-template-columns: 1fr; margin-top: 31px; }
+    li { border-left: 0; border-top: 1px solid var(--color-border); }
+    li:first-child { border-top: 0; }
+    .step-visual { aspect-ratio: auto; height: clamp(220px, 62vw, 330px); padding: 20px; }
+    .step-copy { padding: 22px; }
+    h3 { font-size: var(--size-subheading, 20px); margin-top: 8px; }
+    .step-description { margin-top: 9px; line-height: var(--line-description, 1.85); }
+  }
+</style>

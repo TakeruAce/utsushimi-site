@@ -1,0 +1,49 @@
+---
+import DesignConceptLayout from '../../layouts/DesignConceptLayout.astro';
+const concepts = [
+  { id:'product', n:'A', name:'Product minimal', jp:'製品から、可能性を伝える。', desc:'実機を大きく、言葉は端的に。落ち着いた余白とテラコッタで、先端技術を身近に感じさせる。', tags:['実機の存在感','穏やか・上質'], fit:'製品の独自性と、企業としての信頼感を両立したいとき。', color:'#c2694a', palette:['#fafbf7','#e9c8b8','#bd4b30','#252722'] },
+  { id:'editorial', n:'B', name:'Human editorial', jp:'人と研究の温度を伝える。', desc:'展示写真、明朝体、大胆な余白。研究チームの顔と思想が見える、読みもののような構成。', tags:['人・体験・思想','温かい・知的'], fit:'技術に加えて「このチームと組みたい」を育てたいとき。', color:'#a64a2e', palette:['#f4efe5','#dfc5ae','#a64a2e','#28251f'] },
+  { id:'precision', n:'C', name:'Technical precision', jp:'技術を、事業の言葉で伝える。', desc:'白とコバルト、細い罫線、端正な情報設計。技術と共同開発の進め方を見通しよく示す。', tags:['技術・共同開発','明快・精密'], fit:'企業の研究開発担当者が、相談を具体的に検討するとき。', color:'#2854cc', palette:['#ffffff','#eef2f6','#2854cc','#20262d'] },
+];
+---
+<DesignConceptLayout title="3つのデザインの方向性">
+  <div class="study-page">
+    <header class="intro">
+      <div class="intro-top"><p>Utsushimi / WEBSITE DESIGN DIRECTIONS</p><span>DESIGN EXPLORATION · 01</span></div>
+      <div class="intro-main"><h1>同じUtsushimi。<br />3つの表情。</h1><div><p>伝える内容はそのままに、<br />企業との出会い方をデザインする。</p><span>共同開発・導入を検討する企業に向けた、3つのトップページ案。</span></div></div>
+    </header>
+    <main>
+      <section class="concept-grid" aria-label="3つのデザイン案">
+        {concepts.map(c=><article class={`concept ${c.id}`} style={`--concept-color:${c.color}`}>
+          <div class="concept-heading"><span class="letter">{c.n}</span><div><h2>{c.name}</h2><p>{c.jp}</p></div></div>
+          <a class="thumbnail" href={`/design-lab/${c.id}/`} aria-label={`${c.n}案 ${c.name}を開く`}>
+            <div class="browser-strip"><span></span><span></span><span></span><small>Utsushimi</small><b>↗</b></div>
+            <div class="scaled-preview"><iframe src={`/design-lab/${c.id}/?embed=1`} title={`${c.name}の縮小プレビュー`} tabindex="-1" aria-hidden="true" loading="eager"></iframe></div>
+          </a>
+          <div class="concept-details"><div class="tags">{c.tags.map(tag=><span>{tag}</span>)}<div class="palette" aria-hidden="true">{c.palette.map(color=><i style={`background:${color}`}></i>)}</div></div><p class="description">{c.desc}</p><p class="fit">{c.fit}</p><a class="open-concept" href={`/design-lab/${c.id}/`}>このデザインを見る <span>↗</span></a></div>
+        </article>)}
+      </section>
+      <section class="recommendation">
+        <p class="label">SELECTED DIRECTION</p><h2><span>Cの青と白</span>を軸に、<br class="small-break" /><span>読みやすさと親しみやすさ</span>を。</h2><p>C案をベースに、文字・余白・写真の見せ方を整えた本サイトを公開しています。<br /><a href="/" style="text-decoration:underline;text-underline-offset:4px">仕上げたサイトを見る →</a></p>
+      </section>
+      <section class="considerations"><p class="label">少しだけ、足すなら。</p><div><article><span>01</span><h3>共同開発の進め方</h3><p>既存ページの4ステップをトップにも。相談の先に何があるかがわかります。</p></article><article><span>02</span><h3>触っている様子のデモ</h3><p>すでにある動画を、見つけやすく。「指の入力」と「動く身体」をつなぎます。</p></article><article><span>03</span><h3>相談のきっかけになる案内</h3><p>対象機器・今の課題・試したいこと。問い合わせの書き出しを助けます。</p></article></div></section>
+    </main>
+    <footer><span>既存の文章・実機写真・展示写真を使ったデザイン検討用ページです。</span><a href="/">現行サイトを見る ↗</a></footer>
+  </div>
+</DesignConceptLayout>
+<style>
+  .study-page{background:#f5f5f1;color:#252723;min-height:100vh;padding:0 5vw;font-family:'Noto Sans JP Variable',sans-serif}.intro{max-width:1500px;margin:auto;padding-top:42px}.intro-top{display:flex;justify-content:space-between;gap:20px;font:9px/1.5 'Sora Variable',sans-serif;letter-spacing:.1em;color:#65685e}.intro-top>span{font-size:8px;color:#787c71}.intro-main{display:flex;justify-content:space-between;align-items:flex-end;margin-top:30px;gap:35px;padding-bottom:48px;border-bottom:1px solid #d5d8cc}.intro-main h1{font-size:var(--size-title, clamp(35px, 3.9vw, 58px));font-weight:520;line-height:var(--line-title, 1.4);letter-spacing:-.055em}.intro-main>div{padding-bottom:5px}.intro-main>div>p{font-size:var(--size-description, 17px);line-height:var(--line-description, 1.9)}.intro-main>div>span{display:block;font-size:10px;line-height:1.9;color:#686d60;margin-top:16px}main,footer{max-width:1500px;margin:auto}.concept-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:36px}.concept-heading{display:flex;align-items:center;gap:13px;margin-bottom:18px}.letter{display:grid;place-items:center;width:34px;height:34px;border:1px solid #c8ccbd;border-radius:50%;font:13px 'Sora Variable',sans-serif;flex-shrink:0}.concept-heading h2{font:500 15px/1.4 'Sora Variable',sans-serif;letter-spacing:-.045em;font-size:var(--size-heading, 15px)}.concept-heading p{font-size:var(--size-description, 10px);margin-top:5px;color:#5f6358}.thumbnail{display:block;border:1px solid #d3d6cc;border-radius:6px;overflow:hidden;background:white;transition:box-shadow .2s,transform .2s}.thumbnail:hover{box-shadow:0 12px 25px #25272310;transform:translateY(-3px)}.browser-strip{display:flex;gap:4px;align-items:center;padding:10px 11px;background:#e9ebe4;border-bottom:1px solid #ddd}.browser-strip>span{width:4px;height:4px;border-radius:50%;background:#b8beb0}.browser-strip small{margin:auto;font:7px 'Sora Variable',sans-serif;color:#747a6d;letter-spacing:.1em}.browser-strip b{font-size:10px;font-weight:400}.scaled-preview{position:relative;width:100%;aspect-ratio:1.37;overflow:hidden}.scaled-preview iframe{position:absolute;inset:0;width:1440px;height:1100px;border:0;transform:scale(var(--preview-scale,.25));transform-origin:top left;pointer-events:none}.tags{display:flex;align-items:center;gap:5px;margin-top:20px;flex-wrap:wrap}.tags>span{font-size:8px;padding:5px 7px;border:1px solid #d5d8ce;border-radius:3px;color:#5f6558}.palette{display:flex;gap:3px;margin-left:auto}.palette i{display:block;width:12px;height:12px;border-radius:50%;box-shadow:inset 0 0 0 1px #0000000c}.description{font-size:var(--size-description, 11px);line-height:var(--line-description, 2);color:#555b4f;margin-top:16px;min-height:67px}.fit{font-size:10px;line-height:1.9;margin-top:15px;padding-top:15px;border-top:1px solid #d8dcd0;min-height:55px;color:#333b2c}.open-concept{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #ced3c4;padding:14px 17px;font-size:11px;margin-top:16px;border-radius:4px}.open-concept:hover{border-color:var(--concept-color);color:var(--concept-color)}.open-concept span{font-size:17px}.recommendation{margin-top:65px;padding:40px 0;border-block:1px solid #d3d7c9;display:grid;grid-template-columns:.75fr 1.4fr 1.3fr;gap:30px;align-items:center}.label{font:9px 'Sora Variable','Noto Sans JP Variable',sans-serif;letter-spacing:.08em;color:#67705b}.recommendation h2{font-size:var(--size-heading, 20px);font-weight:450;line-height:var(--line-heading, 1.8);letter-spacing:-.05em}.recommendation h2 span{font-weight:550}.recommendation>p:last-child{font-size:10px;line-height:2;color:#66705b}.small-break{display:none}.considerations{display:grid;grid-template-columns:.75fr 2.7fr;gap:30px;padding:44px 0}.considerations>.label{padding-top:5px}.considerations>div{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}.considerations article>span{font:10px 'Sora Variable',sans-serif;color:#727c65}.considerations h3{font-size:var(--size-subheading, 12px);font-weight:500;margin-top:9px}.considerations article>p{font-size:var(--size-description, 10px);line-height:var(--line-description, 2);color:#68735a;margin-top:9px}footer{border-top:1px solid #d3d7c9;padding:20px 0 30px;display:flex;justify-content:space-between;gap:20px;color:#6b7460;font-size:9px;line-height:1.9}
+  @media(max-width:1100px){.study-page{padding:0 30px}.concept-grid{gap:18px}.concept-heading h2{font-size:var(--size-heading, 12px)}.concept-heading p{font-size:var(--size-description, 9px)}.concept-heading{gap:9px}.letter{width:29px;height:29px;font-size:11px}.palette{display:none}.recommendation{grid-template-columns:.75fr 1.5fr 1.3fr}.recommendation h2{font-size:var(--size-heading, 17px)}.small-break{display:block}.description{min-height:89px}.fit{min-height:74px}}
+  @media(max-width:720px){.study-page{padding:0 20px}.intro{padding-top:28px}.intro-top>span{display:none}.intro-main{display:block;padding-bottom:30px}.intro-main h1{font-size:41px}.intro-main>div{margin-top:22px}.intro-main>div>p{font-size:var(--size-description, 14px)}.intro-main>div>span{font-size:10px}.concept-grid{grid-template-columns:1fr;gap:45px;margin-top:30px}.concept-heading h2{font-size:var(--size-heading, 17px)}.concept-heading p{font-size:var(--size-description, 11px)}.letter{width:37px;height:37px;font-size:14px}.concept-heading{gap:14px}.scaled-preview{aspect-ratio:1.4}.palette{display:flex}.description,.fit{min-height:0;font-size:12px}.tags>span{font-size:10px}.open-concept{font-size:12px}.recommendation{grid-template-columns:1fr;gap:16px;margin-top:45px;padding-block:30px}.recommendation h2{font-size:var(--size-heading, 24px)}.recommendation>p:last-child{font-size:12px}.considerations{grid-template-columns:1fr;gap:25px;padding-block:30px}.considerations>div{grid-template-columns:1fr;gap:25px}.considerations h3{font-size:var(--size-subheading, 14px)}.considerations article>p{font-size:var(--size-description, 12px)}footer{flex-direction:column;font-size:10px;gap:10px}}
+</style>
+<script>
+  const previews = document.querySelectorAll<HTMLElement>('.scaled-preview');
+  const resize = new ResizeObserver(entries => entries.forEach(entry => {
+    (entry.target as HTMLElement).style.setProperty('--preview-scale', String(entry.contentRect.width / 1440));
+  }));
+  previews.forEach(preview => resize.observe(preview));
+</script>
+
+<style>
+  @media(max-width:720px) { .intro-main h1 { font-size: var(--size-title, clamp(31px, 8.9vw, 41px)); } }
+</style>

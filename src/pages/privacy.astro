@@ -1,0 +1,97 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const contents = [
+  ['collection', '個人情報の収集について'],
+  ['purposes', '個人情報の利用目的'],
+  ['disclosure', '個人情報の第三者提供'],
+  ['management', '個人情報の管理'],
+  ['cookies', 'Cookie等の利用について'],
+  ['inquiries', 'お問い合わせ'],
+];
+---
+
+<BaseLayout
+  title="プライバシーポリシー | うつしみ"
+  description="うつしみ株式会社（Utsushimi）のプライバシーポリシー。個人情報の取り扱いについて。"
+>
+  <main id="main-content" class="privacy-page">
+    <section class="page-heading site-shell" aria-labelledby="page-title">
+      <p class="eyebrow">PRIVACY POLICY</p>
+      <h1 class="heading-xl" id="page-title"><span>プライバシー</span><wbr /><span>ポリシー</span></h1>
+      <p class="policy-date muted">最終更新日: <time datetime="2026-09-29">2026年9月29日</time></p>
+    </section>
+
+    <div class="site-shell policy-layout">
+      <aside class="policy-sidebar">
+        <nav aria-label="プライバシーポリシーの目次">
+          <p class="eyebrow">CONTENTS</p>
+          <ol>{contents.map(([id, title], index) => <li><a href={`#${id}`}><span>0{index + 1}</span>{title}</a></li>)}</ol>
+        </nav>
+      </aside>
+      <div class="article-prose policy-body">
+        <section id="collection" aria-labelledby="collection-title">
+          <h2 id="collection-title"><span>01</span>個人情報の収集について</h2>
+          <p>うつしみ株式会社（以下「当社」）は、お問い合わせ等を通じて、お名前、メールアドレス、会社名等の個人情報をご提供いただく場合があります。これらの情報は、お問い合わせへの回答、サービスのご案内等の目的でのみ使用いたします。</p>
+        </section>
+        <section id="purposes" aria-labelledby="purposes-title">
+          <h2 id="purposes-title"><span>02</span>個人情報の利用目的</h2>
+          <ul>
+            <li>お問い合わせへの対応・回答</li>
+            <li>技術デモ・イベントのご案内</li>
+            <li>サービスの改善・開発のための統計分析</li>
+          </ul>
+        </section>
+        <section id="disclosure" aria-labelledby="disclosure-title">
+          <h2 id="disclosure-title"><span>03</span>個人情報の第三者提供</h2>
+          <p>当社は、法令に基づく場合を除き、ご本人の同意なく個人情報を第三者に提供することはありません。</p>
+        </section>
+        <section id="management" aria-labelledby="management-title">
+          <h2 id="management-title"><span>04</span>個人情報の管理</h2>
+          <p>当社は、個人情報の漏洩、滅失またはき損の防止のために、適切な安全管理措置を講じます。</p>
+        </section>
+        <section id="cookies" aria-labelledby="cookies-title">
+          <h2 id="cookies-title"><span>05</span>Cookie等の利用について</h2>
+          <p>本サイトでは、利便性向上やアクセス分析のためにCookie等の技術を使用する場合があります。ブラウザの設定により、Cookieの受け入れを拒否することが可能です。</p>
+        </section>
+        <section id="inquiries" aria-labelledby="inquiries-title">
+          <h2 id="inquiries-title"><span>06</span>お問い合わせ</h2>
+          <p>個人情報の取り扱いに関するお問い合わせは、<a href="/contact/">お問い合わせページ</a>よりご連絡ください。</p>
+        </section>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .privacy-page h1 span { display: inline-block; }
+  .policy-date { margin-top: 24px; font-size: 13px; }
+  .policy-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 80px; align-items: start; padding-bottom: 104px; }
+  .policy-sidebar { position: sticky; top: 112px; }
+  .policy-sidebar ol { list-style: none; margin: 24px 0 0; padding: 0; border-top: 1px solid var(--color-border); }
+  .policy-sidebar li { border-bottom: 1px solid var(--color-border); }
+  .policy-sidebar a { display: flex; align-items: baseline; gap: 16px; padding: 16px 0; font-size: 13px; line-height: 1.7; }
+  .policy-sidebar a span { color: var(--color-brand); font: 12px/1.7 'Sora Variable', sans-serif; flex-shrink: 0; }
+  .policy-sidebar a:hover { color: var(--color-brand); }
+  .policy-body { max-width: 800px; }
+  .policy-body > section { border-top: 1px solid var(--color-border); padding-top: 32px; scroll-margin-top: 112px; }
+  .policy-body > section:first-child { border-top-color: var(--color-text); }
+  .policy-body > section + section { margin-top: 48px; }
+  .policy-body h2 { display: flex; align-items: baseline; gap: 20px; font-size: var(--size-heading, 23px); line-height: var(--line-heading, 1.6); font-weight: 550; letter-spacing: -.025em; }
+  .policy-body h2 span { font: 13px/1.8 'Sora Variable', sans-serif; color: var(--color-brand); flex-shrink: 0; }
+  .policy-body p, .policy-body ul { margin-top: 20px; font-size: 16px; line-height: 2; color: var(--color-text-secondary); }
+  .policy-body ul { padding-left: 22px; }
+  .policy-body li + li { margin-top: 8px; }
+  .policy-body a { color: var(--color-brand); text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 1100px) { .policy-layout { grid-template-columns: 240px minmax(0, 1fr); gap: 48px; } }
+  @media (max-width: 760px) {
+    .privacy-page h1 { font-size: var(--size-title, 42px); line-height: var(--line-title, 1.5); }
+    .policy-layout { grid-template-columns: 1fr; gap: 48px; padding-bottom: 64px; }
+    .policy-sidebar { position: static; }
+    .policy-sidebar ol { margin-top: 20px; }
+    .policy-sidebar a { font-size: 13px; padding-block: 14px; }
+    .policy-body > section { padding-top: 24px; scroll-margin-top: 96px; }
+    .policy-body > section + section { margin-top: 40px; }
+    .policy-body h2 { font-size: var(--size-heading, 21px); gap: 16px; }
+  }
+</style>

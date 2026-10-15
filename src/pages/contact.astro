@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { company } from '../data/company';
+import ContactForm from '../components/ContactForm.astro';
+import GoogleContactForm from '../components/GoogleContactForm.astro';
+
+// Published form is tracked so fresh builds retain the verified contact destination.
+const googleFormUrl = (import.meta.env.PUBLIC_GOOGLE_CONTACT_FORM_URL || company.googleContactFormUrl).trim();
+
+const inquiryTypes = [
+  '技術デモの体験・見学',
+  '身体性インタフェースの貸出',
+  '共同研究・技術連携のご相談',
+  '操作インタフェースの開発委託',
+  '遠隔操作システムへの導入検討',
+  '取材・メディア掲載',
+  '採用・インターンシップ',
+];
+---
+
+<BaseLayout
+  title="お問い合わせ | うつしみ"
+  description="うつしみ株式会社（Utsushimi）へのお問い合わせ。身体性インタフェースの貸出、共同研究、開発委託、取材、採用に関するご相談の窓口です。"
+>
+  <main id="main-content" class="contact-page">
+    <section class="page-heading site-shell" aria-labelledby="page-title">
+      <p class="eyebrow">CONTACT</p>
+      <h1 class="heading-xl" id="page-title">お問い合わせ</h1>
+      <p class="lead muted">技術デモのご依頼、共同研究のご相談、<br class="contact-break" />取材のお申し込みまで、お気軽にご連絡ください。</p>
+    </section>
+
+    <section class="contact-content site-shell" aria-label="ご相談の窓口">
+      <div class="contact-panel surface">
+        <p class="eyebrow">GET IN TOUCH</p>
+        <h2>ご相談内容を<br />お聞かせください</h2>
+        <p class="form-introduction muted">アイデアや課題の整理前でも構いません。<br />分かる範囲でお知らせください。</p>
+        {googleFormUrl ? <GoogleContactForm formUrl={googleFormUrl} /> : <ContactForm inquiryTypes={inquiryTypes} />}
+        <p class="privacy-note muted">個人情報の取り扱いについては、<a href="/privacy/">プライバシーポリシー</a>をご確認ください。</p>
+      </div>
+
+      <div class="contact-overview">
+        <div class="inquiry-types">
+          <p class="eyebrow">HOW WE CAN HELP</p>
+          <h2>こんなご相談を歓迎します</h2>
+          <ul>{inquiryTypes.map((item, index) => <li><span aria-hidden="true">0{index + 1}</span>{item}</li>)}</ul>
+        </div>
+        <div class="contact-location">
+          <h2>登記上の所在地</h2>
+          <p>{company.legalName}</p>
+          <address>{company.registeredAddress}</address>
+          <a class="text-link" href="/company/">会社概要を見る <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .contact-content { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, .85fr); gap: 72px; padding-bottom: 104px; align-items: start; }
+  .inquiry-types h2 { font-size: var(--size-heading, 23px); font-weight: 550; line-height: var(--line-heading, 1.6); margin-top: 16px; letter-spacing: -.025em; }
+  .inquiry-types ul { list-style: none; padding: 0; margin: 32px 0 0; border-top: 1px solid var(--color-text); }
+  .inquiry-types li { display: flex; align-items: baseline; gap: 24px; border-bottom: 1px solid var(--color-border); padding: 19px 0; font-size: 16px; line-height: 1.9; }
+  .inquiry-types li > span { flex-shrink: 0; font: 12px/1.8 'Sora Variable', sans-serif; color: var(--color-brand); }
+  .contact-location { margin-top: 48px; }
+  .contact-location h2 { font-size: var(--size-heading, 13px); font-weight: 500; color: var(--color-text-tertiary); margin-bottom: 16px; }
+  .contact-location > p, .contact-location address { font-size: 16px; line-height: 1.9; }
+  .contact-location address { font-style: normal; margin-top: 8px; max-width: 440px; }
+  .contact-location .text-link { margin-top: 20px; }
+  .contact-panel { padding: 48px; border-top: 2px solid var(--color-brand); }
+  .contact-panel .eyebrow { display: flex; align-items: center; gap: 10px; }
+  .contact-panel h2 { font-size: var(--size-heading, clamp(26px, 2.4vw, 32px)); line-height: var(--line-heading, 1.65); font-weight: 550; letter-spacing: -.035em; margin-top: 24px; }
+  .contact-panel > p:not(.eyebrow) { margin-top: 24px; font-size: var(--size-label, 16px); line-height: var(--line-label, 1.95); }
+  .contact-panel > .form-introduction { font-size: var(--size-lead, 16px); line-height: 1.9; }
+  .contact-panel > .privacy-note { font-size: 13px !important; border-top: 1px solid var(--color-border); margin-top: 40px; padding-top: 24px; }
+  .privacy-note a { text-decoration: underline; text-underline-offset: 4px; color: var(--color-brand); }
+  @media (max-width: 1100px) { .contact-content { gap: 48px; } .contact-panel { padding: 32px; } }
+  @media (max-width: 760px) {
+    .contact-content { display: flex; flex-direction: column; gap: 48px; padding-bottom: 64px; }
+    .contact-panel, .contact-overview { width: 100%; }
+    .contact-panel { padding: 32px 24px; }
+    .contact-panel h2 { font-size: var(--size-heading, 25px); }
+    .contact-panel > p:not(.eyebrow) { margin-top: 20px; }
+    .contact-panel > .privacy-note { margin-top: 32px; }
+    .inquiry-types h2 { font-size: var(--size-heading, 22px); }
+    .inquiry-types ul { margin-top: 24px; }
+    .inquiry-types li { gap: 20px; }
+    .contact-location { margin-top: 40px; }
+    .contact-break { display: none; }
+  }
+</style>

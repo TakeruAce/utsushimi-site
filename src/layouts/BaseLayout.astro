@@ -1,0 +1,89 @@
+---
+import SiteIcons from '../components/SiteIcons.astro';
+import '@fontsource-variable/sora';
+import '@fontsource-variable/noto-sans-jp';
+import '../styles/global.css';
+import '../styles/site-settings.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { company } from '../data/company';
+import heroDevice from '../assets/images/hero-device.png';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  hideHeader?: boolean;
+  canonicalPath?: string;
+}
+
+const {
+  title,
+  description = '指先の力で、動かす可能性。うつしみ株式会社は、力入力インタフェースYUBIの研究開発を通じて、人と機械の新しい接点をつくります。',
+  ogImage = heroDevice.src,
+  hideHeader = false,
+  canonicalPath = Astro.url.pathname,
+} = Astro.props;
+
+const canonicalURL = new URL(canonicalPath, Astro.site);
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SiteIcons />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Primary Meta -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- OGP -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site)} />
+    <meta property="og:locale" content="ja_JP" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site)} />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": company.displayName,
+      "legalName": company.legalName,
+      "alternateName": company.brandName,
+      "url": Astro.site?.href,
+      "logo": new URL('/images/utsushimi-logo-c-mask-20261009.png', Astro.site).href,
+      "description": company.businessDescription,
+      "identifier": {
+        "@type": "PropertyValue",
+        "propertyID": "法人番号",
+        "value": company.corporateNumber
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "JP",
+        "addressRegion": company.addressRegion,
+        "addressLocality": company.addressLocality,
+        "streetAddress": company.streetAddress
+      },
+      "sameAs": []
+    })} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">本文へ移動</a>
+    {!hideHeader && <Header />}
+    <slot />
+    <Footer />
+  </body>
+</html>

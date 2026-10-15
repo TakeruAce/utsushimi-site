@@ -1,0 +1,33 @@
+{
+  "name": "yubi-web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "test": "node scripts/tests/intro-snap.mjs && node scripts/tests/pseudo-haptics-model.mjs && node scripts/tests/pseudo-haptics-interactions.mjs && node scripts/tests/contact-form.mjs",
+    "check:site": "python3 scripts/check-built-site.py"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp",
+      "esbuild"
+    ]
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "@fontsource-variable/noto-sans-jp": "^5.2.10",
+    "@fontsource-variable/sora": "^5.2.8",
+    "@tailwindcss/vite": "^4.2.2",
+    "astro": "^6.1.5",
+    "gsap": "^3.14.2",
+    "lucide-static": "^1.8.0",
+    "tailwindcss": "^4.2.2"
+  },
+  "packageManager": "pnpm@10.18.3"
+}

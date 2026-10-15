@@ -1,0 +1,109 @@
+---
+import Brand from './Brand.astro';
+interface Props { overIntro?: boolean; }
+const { overIntro = false } = Astro.props;
+const nav = [
+  { label: '事業領域', href: '/solutions/' },
+  { label: '身体性インタフェースの技術', href: '/products/' },
+  { label: '私たちについて', href: '/company/' },
+  { label: 'お知らせ', href: '/news/' },
+];
+const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.replace(/\/$/, '');
+---
+<header class:list={["site-header", { "site-header-over-intro": overIntro }]} data-intro-header={overIntro || undefined}>
+  <div class="site-shell header-inner">
+    <Brand />
+    <nav class="desktop-nav" aria-label="メインナビゲーション">
+      {nav.map(item => <a href={item.href} aria-current={active(item.href) ? 'page' : undefined}>{item.label}</a>)}
+      <a class="header-contact" href="/contact/" aria-current={active('/contact/') ? 'page' : undefined}>共同開発のご相談 <span aria-hidden="true">→</span></a>
+    </nav>
+    <details class="mobile-menu">
+      <summary aria-label="メニュー"><span>メニュー</span><span class="menu-icon" aria-hidden="true"><i></i><i></i></span></summary>
+      <nav aria-label="モバイルナビゲーション">
+        {nav.map(item => <a href={item.href} aria-current={active(item.href) ? 'page' : undefined}>{item.label}<span aria-hidden="true">→</span></a>)}
+        <a class="mobile-contact" href="/contact/">共同開発のご相談 <span aria-hidden="true">→</span></a>
+      </nav>
+    </details>
+  </div>
+</header>
+<style>
+  .site-header { position: sticky; top: 0; z-index: 40; background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
+  .site-header-over-intro { position: fixed; inset: 0 0 auto; transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease; }
+  .site-header-over-intro[data-on-intro] { background: transparent; border-color: transparent; color: #fff; }
+  .site-header-over-intro[data-on-intro]::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(#071932b3, #07193200); }
+  .site-header-over-intro[data-on-intro] :global(.brand-symbol) { color: #fff; }
+  .site-header-over-intro[data-on-intro] .desktop-nav a:hover { color: #fff; text-decoration: underline; text-underline-offset: 6px; }
+  .site-header-over-intro[data-on-intro] .desktop-nav .header-contact { background: #ffffff0d; border-color: #ffffff80; color: #fff; }
+  .site-header-over-intro[data-on-intro] .desktop-nav .header-contact:hover, .site-header-over-intro[data-on-intro] .desktop-nav .header-contact:focus-visible { color: #fff; background: #ffffff26; }
+  .site-header-over-intro .mobile-menu nav { color: var(--color-text); }
+  .site-header-over-intro:has(.mobile-menu[open]) { background: var(--color-surface); border-color: var(--color-border); color: var(--color-text); }
+  .site-header-over-intro:has(.mobile-menu[open]) :global(.brand-symbol) { color: var(--color-brand); }
+  @media(prefers-reduced-motion: reduce) { .site-header-over-intro { transition: none; } }
+  .header-inner { min-height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+  .desktop-nav { display: flex; align-items: center; gap: 30px; }
+  .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; font-weight: 500; white-space: nowrap; transition: color var(--motion-fast); }
+  .desktop-nav a:not(.header-contact):hover, a[aria-current='page']:not(.header-contact) { color: var(--color-brand); }
+  a[aria-current='page'] { text-decoration: underline; text-underline-offset: 8px; }
+  .desktop-nav .header-contact { gap: 22px; padding: 12px 18px; border: 1px solid var(--color-brand); border-radius: var(--radius-control); color: #fff; background: var(--color-brand); min-height: 46px; }
+  .desktop-nav .header-contact:hover, .desktop-nav .header-contact:focus-visible { color: #fff; background: var(--color-brand-hover); }
+  .header-contact span { font-size: 20px; line-height: 1; }
+  .mobile-menu { display: none; }
+  @media(max-width:1100px) { .desktop-nav { gap: 20px; }.desktop-nav a { font-size: 12px; }.header-inner { gap: 24px; } }
+  @media(max-width:950px) {
+    .header-inner { min-height: 76px; }
+    .desktop-nav { display: none; }
+    .mobile-menu { display: block; }
+    summary { display: flex; align-items: center; gap: 12px; min-height: 44px; padding-left: 12px; list-style: none; font-size: 12px; }
+    summary::-webkit-details-marker { display: none; }
+    .menu-icon { display: flex; flex-direction: column; gap: 6px; width: 20px; }
+    .menu-icon i { display: block; width: 20px; height: 1px; background: currentColor; transition: transform var(--motion-fast); }
+    details[open] .menu-icon i:first-child { transform: translateY(3.5px) rotate(45deg); }
+    details[open] .menu-icon i:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+    .mobile-menu nav { position: absolute; top: 100%; left: 0; right: 0; max-height: calc(100dvh - 76px); overflow-y: auto; overscroll-behavior: contain; padding: 12px 32px 24px; background: var(--color-surface); border-bottom: 1px solid var(--color-border); box-shadow: 0 16px 24px #19202608; }
+    .mobile-menu nav a { display: flex; align-items: center; justify-content: space-between; min-height: 58px; padding: 12px 0; border-bottom: 1px solid var(--color-border); font-size: 15px; }
+    .mobile-menu nav .mobile-contact { color: var(--color-brand); border-bottom: none; }
+    .mobile-menu nav a span { font-size: 20px; }
+  }
+  @media(max-width:760px) { .header-inner { gap: 16px; }.mobile-menu { flex-shrink: 0; } summary { padding-left: 0; gap: 8px; white-space: nowrap; }.mobile-menu nav { padding-inline: 20px; } }
+</style>
+<script>
+  const introHeader = document.querySelector<HTMLElement>('[data-intro-header]');
+  const overview = document.querySelector<HTMLElement>('#company-overview');
+  if (introHeader && overview) {
+    let frame = 0;
+    const updateHeader = () => {
+      frame = 0;
+      // Keep one header at the top; change its appearance as the company panel
+      // approaches it, including restored scroll positions and reverse scrolling.
+      introHeader.toggleAttribute('data-on-intro', overview.getBoundingClientRect().top > introHeader.offsetHeight + 48);
+    };
+    const requestUpdate = () => { if (!frame) frame = requestAnimationFrame(updateHeader); };
+    updateHeader();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+    window.addEventListener('pageshow', requestUpdate);
+    const observer = new ResizeObserver(requestUpdate);
+    observer.observe(overview);
+    observer.observe(introHeader);
+    document.addEventListener('astro:before-swap', () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+      window.removeEventListener('pageshow', requestUpdate);
+    }, { once: true });
+  }
+  const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+  const summary = menu?.querySelector('summary');
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu?.open) { menu.open = false; summary?.focus(); }
+  });
+  document.addEventListener('click', event => {
+    if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+  });
+  document.addEventListener('focusin', event => {
+    if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) menu.open = false;
+  });
+  window.matchMedia('(min-width:951px)').addEventListener('change', event => { if (event.matches && menu) menu.open = false; });
+</script>

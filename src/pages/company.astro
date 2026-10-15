@@ -1,0 +1,261 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactBand from '../components/ContactBand.astro';
+import { Image } from 'astro:assets';
+import teamHirao from '../assets/images/2026-10-14_hirao-portrait-tone_v3.webp';
+import teamHashimoto from '../assets/images/team-hashimoto.png';
+import { company } from '../data/company';
+
+const team = [
+  {
+    id: 'hirao',
+    name: '平尾 悠太朗',
+    nameEn: 'Yutaro Hirao',
+    role: 'CEO',
+    education: '2020年、早稲田大学大学院基幹理工学研究科修士課程修了。2023年、東京大学大学院情報理工学系研究科博士課程修了、博士（情報理工学）の学位を取得。同年より奈良先端科学技術大学院大学助教を経て、2026年よりクラスター株式会社メタバース研究所リサーチサイエンティスト。同年、うつしみ株式会社を創業し、CEOを兼務。',
+    biography: '主に、バーチャルリアリティ、クロスモーダルインタフェース、身体性、触知覚に関する研究に従事。',
+    photo: teamHirao,
+  },
+  {
+    id: 'hashimoto',
+    name: '橋本 健',
+    nameEn: 'Takeru Hashimoto',
+    role: 'CTO',
+    education: '東京大学大学院 博士課程修了。博士（情報理工学）。',
+    biography: 'デバイス設計から組み込みファームウェア、Webシステムまで、プロダクト開発を主導。',
+    photo: teamHashimoto,
+  },
+];
+
+const timeline = [
+  { year: '2024.07', event: '経済産業省 先端テクノロジー社会実装プログラム（TIP）採択' },
+  { year: '2024.10', event: 'ACM UIST 2024 論文採択（Pittsburgh, USA）' },
+  { year: '2024.11', event: 'DCEXPO にて NEDO賞・SIGGRAPH Special Prize ダブル受賞' },
+  { year: '2024.12', event: 'SIGGRAPH Asia 2024 Best Demo in Show Award 受賞' },
+  { year: '2025.04', event: 'NEDO Entrepreneurs Program 2025年度 開拓コース採択（平尾悠太朗）' },
+  { year: '2025', event: 'SIGGRAPH 2025 展示' },
+];
+---
+
+<BaseLayout
+  title="会社概要 | うつしみ"
+  description="うつしみ株式会社（Utsushimi）の会社概要。ミッション、チーム、沿革をご紹介します。"
+>
+  <main id="main-content" class="company-page">
+    <section class="page-heading site-shell" aria-labelledby="page-title">
+      <p class="eyebrow">COMPANY</p>
+      <h1 class="heading-xl" id="page-title">会社概要</h1>
+      <p class="lead muted">アカデミアの知見と産業界の実践力を融合したコアチーム。</p>
+    </section>
+
+    <section class="section surface" aria-labelledby="mission-title">
+      <div class="site-shell mission-layout">
+        <p class="eyebrow">01 / MISSION</p>
+        <div class="mission-copy">
+          <h2 class="heading-lg" id="mission-title">誰もが、どんなものでも、<br /><span>自分の身体のように動かせる</span></h2>
+          <p class="lead muted">うつしみは、身体性インタフェースを通じて、指先から身体の可能性を拡張します。遠隔操作・福祉・エンターテインメントなど、あらゆる領域で人とデジタルの新しい関係を築きます。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section site-shell" aria-labelledby="team-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">02 / TEAM</p><h2 class="heading-lg" id="team-title">チーム</h2></div>
+        <p class="muted">研究、開発、事業。それぞれの専門性を持ち寄ります。</p>
+      </div>
+      <div class="team-grid">
+        {team.map((member) => (
+          <article class="team-member" aria-labelledby={`member-${member.id}`}>
+            <div class="portrait-frame">
+              <Image src={member.photo} class:list={[member.id === 'hirao' && 'portrait-hirao']} alt={member.name} width={880} widths={[360, 640, 880]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 46vw, 492px" loading="lazy" />
+            </div>
+            <div class="member-meta">
+              <div class="member-heading">
+                <h3 id={`member-${member.id}`}>{member.name}</h3>
+                <p class="member-name-en">{member.nameEn}</p>
+              </div>
+              <p class="member-role">{member.role}</p>
+            </div>
+            <button
+              class="member-profile-trigger"
+              type="button"
+              data-profile-open={`profile-${member.id}`}
+              aria-controls={`profile-${member.id}`}
+              aria-haspopup="dialog"
+              aria-label={`${member.name}のプロフィールを見る`}
+              hidden
+            >
+              <span>プロフィールを見る</span><span aria-hidden="true">↗</span>
+            </button>
+            <noscript><p class="member-profile-fallback">{member.education}<br />{member.biography}</p></noscript>
+            <dialog class="member-dialog" id={`profile-${member.id}`} aria-labelledby={`profile-name-${member.id}`}>
+              <div class="profile-toolbar">
+                <button class="profile-close" type="button" aria-label="プロフィールを閉じる" autofocus>
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.5" /></svg>
+                </button>
+              </div>
+              <div class="profile-layout">
+                <div class="profile-portrait">
+                  <Image src={member.photo} class:list={[member.id === 'hirao' && 'portrait-hirao']} alt={member.name} width={640} widths={[360, 640, 880]} sizes="(max-width: 760px) calc(100vw - 80px), 320px" loading="lazy" />
+                </div>
+                <div class="profile-copy">
+                  <p class="profile-role">{member.role}</p>
+                  <h2 id={`profile-name-${member.id}`}>{member.name}</h2>
+                  <p class="member-name-en">{member.nameEn}</p>
+                  <div class="profile-biography">
+                    <p class="eyebrow">PROFILE</p>
+                    <p>{member.education}</p>
+                    <p>{member.biography}</p>
+                  </div>
+                </div>
+              </div>
+            </dialog>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section surface" aria-labelledby="history-title">
+      <div class="site-shell company-split">
+        <div><p class="eyebrow">03 / HISTORY</p><h2 class="heading-lg" id="history-title">沿革</h2></div>
+        <ol class="history-list">
+          {timeline.map((item) => (
+            <li><span class="history-date">{item.year}</span><p>{item.event}</p></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section site-shell company-split" aria-labelledby="info-title">
+      <div><p class="eyebrow">04 / INFORMATION</p><h2 class="heading-lg" id="info-title">基本情報</h2></div>
+      <dl class="detail-list company-details">
+        {[
+          ['会社名', company.legalName],
+          ['ブランド表記', `${company.displayName} / ${company.brandName}`],
+          ['法人番号', company.corporateNumber],
+          ['登記上の所在地', company.registeredAddress],
+          ['事業内容', company.businessDescription],
+          ['協力研究機関', '東京大学、奈良先端科学技術大学院大学'],
+        ].map(([label, value]) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+      </dl>
+    </section>
+    <ContactBand />
+  </main>
+</BaseLayout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-profile-open]').forEach((trigger) => {
+    const dialog = document.getElementById(trigger.dataset.profileOpen ?? '');
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    const close = dialog.querySelector<HTMLButtonElement>('.profile-close');
+    let startedOnBackdrop = false;
+    const outside = (event: MouseEvent) => {
+      const bounds = dialog.getBoundingClientRect();
+      return event.clientX < bounds.left || event.clientX > bounds.right ||
+        event.clientY < bounds.top || event.clientY > bounds.bottom;
+    };
+
+    trigger.hidden = false;
+    trigger.addEventListener('click', () => {
+      if (dialog.open) return;
+      dialog.showModal();
+      dialog.scrollTop = 0;
+    });
+    close?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('pointerdown', (event) => {
+      startedOnBackdrop = event.target === dialog && outside(event);
+    });
+    dialog.addEventListener('pointercancel', () => { startedOnBackdrop = false; });
+    dialog.addEventListener('click', (event) => {
+      if (startedOnBackdrop && event.target === dialog && outside(event)) dialog.close();
+      startedOnBackdrop = false;
+    });
+    dialog.addEventListener('close', () => {
+      startedOnBackdrop = false;
+      trigger.focus({ preventScroll: true });
+    });
+  });
+</script>
+
+<style>
+  .company-page { color: var(--color-text); }
+  .mission-layout, .company-split { display: grid; grid-template-columns: 1fr 2.1fr; gap: 64px; }
+  .mission-layout > .eyebrow { padding-top: 12px; }
+  .mission-copy h2 { font-size: var(--size-heading, clamp(28px, 3vw, 40px)); }
+  .mission-copy h2 span { color: var(--color-brand); }
+  .mission-copy > p { max-width: 720px; margin-top: 32px; }
+  .company-split > div > h2 { margin-top: 16px; }
+  .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; max-width: 1040px; margin: 48px auto 0; }
+  .team-member { min-width: 0; }
+  .portrait-frame { aspect-ratio: 1.06; overflow: hidden; background: var(--color-surface-alt); }
+  .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .member-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; margin-top: 24px; }
+  .member-heading h3 { font-size: var(--size-subheading, 26px); line-height: var(--line-subheading, 1.5); font-weight: 600; letter-spacing: -.025em; }
+  .member-name-en { margin-top: 4px; font: 13px/1.6 'Sora Variable', sans-serif; color: var(--color-text-tertiary); }
+  .member-role { flex-shrink: 0; color: var(--color-brand); font: 550 14px/1.8 'Sora Variable', sans-serif; }
+  .member-profile-trigger { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 20px; border: 0; border-top: 1px solid var(--color-border); margin-top: 24px; padding: 16px 0; background: transparent; font-size: 14px; line-height: 1.7; text-align: left; color: var(--color-text-secondary); transition: color var(--motion-fast), border-color var(--motion-fast); }
+  .member-profile-trigger > span:last-child { color: var(--color-brand); font-size: 20px; line-height: 1; }
+  .member-profile-trigger:hover { color: var(--color-brand); border-color: var(--color-brand); }
+  .member-profile-fallback { margin-top: 24px; font-size: 14px; color: var(--color-text-secondary); }
+  :global(html:has(.member-dialog[open])) { overflow: hidden; scrollbar-gutter: stable; }
+  .member-dialog { position: fixed; inset: 0; width: min(920px, calc(100% - 64px)); max-width: none; max-height: calc(100dvh - 64px); margin: auto; padding: 0; overflow: auto; overscroll-behavior: contain; border: 1px solid var(--color-border); border-radius: var(--radius-image); background: var(--color-surface); color: var(--color-text); box-shadow: 0 24px 96px rgb(10 20 35 / .2); }
+  .member-dialog::backdrop { background: rgb(15 25 40 / .58); backdrop-filter: blur(5px); }
+  .member-dialog[open] { animation: profile-enter 0.22s var(--ease-out-expo) both; }
+  .member-dialog[open]::backdrop { animation: profile-backdrop-enter 180ms ease-out both; }
+  .profile-toolbar { position: sticky; top: 0; z-index: 1; height: 0; }
+  .profile-close { position: absolute; top: 16px; right: 16px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--color-border); border-radius: 50%; background: var(--color-surface); color: var(--color-text); transition: color var(--motion-fast), background var(--motion-fast); }
+  .profile-close:hover { background: var(--color-brand-pale); color: var(--color-brand); }
+  .profile-close:focus-visible { outline-offset: 3px; }
+  .profile-layout { display: grid; grid-template-columns: .85fr 1fr; align-items: center; gap: 48px; padding: 64px 52px 52px; }
+  .profile-portrait { aspect-ratio: .87; overflow: hidden; background: var(--color-surface-alt); }
+  .profile-portrait img { width: 100%; height: 100%; object-fit: cover; }
+  .profile-copy { min-width: 0; }
+  .profile-role { margin-bottom: 12px; color: var(--color-brand); font: 550 14px/1.7 var(--font-display); }
+  .profile-copy h2 { font-size: var(--size-heading, 32px); }
+  .profile-biography { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--color-border); }
+  .profile-biography > p:not(.eyebrow) { margin-top: 16px; font-size: var(--size-label, 15px); line-height: var(--line-label, 2); color: var(--color-text-secondary); }
+  @keyframes profile-enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes profile-backdrop-enter { from { opacity: 0; } to { opacity: 1; } }
+  .history-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--color-text); }
+  .history-list li { display: grid; grid-template-columns: 108px 1fr; gap: 32px; padding: 28px 0; border-bottom: 1px solid var(--color-border); }
+  .history-date { font: 13px/1.9 'Sora Variable', sans-serif; color: var(--color-brand); padding-top: 3px; }
+  .history-list p { font-size: var(--size-description, 16px); line-height: var(--line-description, 1.9); }
+  .company-details { margin: 0; border-top: 1px solid var(--color-text); }
+  .company-details > div { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 32px; border-bottom: 1px solid var(--color-border); padding: 24px 0; }
+  .company-details dt { font-size: 13px; font-weight: 500; color: var(--color-text-tertiary); padding-top: 3px; }
+  .company-details dd { margin: 0; font-size: 16px; line-height: 1.9; overflow-wrap: anywhere; }
+  @media (max-width: 1100px) {
+    .mission-layout, .company-split { grid-template-columns: 1fr 2.2fr; gap: 40px; }
+    .team-grid { gap: 32px; }
+    .member-heading h3 { font-size: var(--size-subheading, 23px); }
+    .company-details > div { grid-template-columns: 120px minmax(0, 1fr); gap: 24px; }
+  }
+  @media (max-width: 760px) {
+    .mission-layout, .company-split { grid-template-columns: 1fr; gap: 32px; }
+    .mission-layout > .eyebrow { padding-top: 0; }
+    .mission-copy h2 { font-size: var(--size-heading, 28px); line-height: var(--line-heading, 1.65); }
+    .mission-copy > p { margin-top: 24px; }
+    .team-grid { grid-template-columns: 1fr; gap: 56px; margin-top: 32px; }
+    .portrait-frame { aspect-ratio: 1.12; }
+    .member-heading h3 { font-size: var(--size-subheading, 26px); }
+    .member-profile-trigger { margin-top: 20px; }
+    .member-dialog { width: calc(100% - 32px); max-height: calc(100dvh - 32px); }
+    .profile-layout { grid-template-columns: 1fr; gap: 24px; padding: 72px 24px 32px; }
+    .profile-portrait { width: 100%; max-width: 320px; aspect-ratio: 1.4; }
+    .profile-copy h2 { font-size: var(--size-heading, 28px); }
+    .profile-role { margin-bottom: 8px; }
+    .profile-biography { margin-top: 24px; padding-top: 20px; }
+    .history-list li { grid-template-columns: 78px minmax(0, 1fr); gap: 20px; padding: 24px 0; }
+    .history-date { font-size: 12px; }
+    .company-details > div { grid-template-columns: 1fr; gap: 8px; padding: 20px 0; }
+    .company-details dt { padding-top: 0; }
+  }
+
+  img.portrait-hirao { object-position: 52% 50%; transform: scale(1.6); transform-origin: 52% 43%; }
+</style>
+
+<style>
+  @media(max-width:760px) { .mission-copy h2 span { display: inline-block; max-width: 100%; text-wrap: balance; } }
+
+  img.portrait-hirao { object-position: 52% 50%; transform: scale(1.6); transform-origin: 52% 43%; }
+</style>

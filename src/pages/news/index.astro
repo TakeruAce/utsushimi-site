@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ContactBand from '../../components/ContactBand.astro';
+
+import { news as allNews } from '../../data/news';
+
+const categories = ['すべて', ...new Set(allNews.map((item) => item.category))];
+const sortedNews = allNews;
+---
+
+<BaseLayout
+  title="お知らせ | うつしみ"
+  description="うつしみと身体性インタフェースの最新情報、受賞、学会発表、イベント出展のお知らせ。"
+>
+  <main id="main-content" class="news-page">
+    <section class="page-heading site-shell" aria-labelledby="page-title">
+      <p class="eyebrow">NEWS</p>
+      <h1 class="heading-xl" id="page-title">ニュース</h1>
+      <p class="lead muted">最新の受賞、学会発表、イベント出展のお知らせ。</p>
+    </section>
+
+    <section class="news-content site-shell" aria-label="お知らせ一覧">
+      <div class="news-toolbar">
+        <div class="news-filters" role="group" aria-label="カテゴリーで絞り込む" hidden>
+          {categories.map((category, index) => <button type="button" class="news-filter" data-news-filter={category} aria-pressed={index === 0 ? 'true' : 'false'} aria-controls="news-list">{category}</button>)}
+        </div>
+        <p class="news-count muted" aria-live="polite" aria-atomic="true">{allNews.length}件のお知らせ</p>
+      </div>
+      <div id="news-list" class="news-list">
+        {sortedNews.map((item) => (
+          <article class="news-entry" data-news-category={item.category}>
+            <div class="news-meta"><span class="news-date">{item.date}</span><span class="tag">{item.category}</span></div>
+            <h2>{item.title}</h2>
+          </article>
+        ))}
+      </div>
+      <p class="news-end muted">うつしみ / お知らせ</p>
+    </section>
+    <ContactBand />
+  </main>
+</BaseLayout>
+
+<script>
+  const newsPage = document.querySelector<HTMLElement>('.news-page');
+  if (newsPage) {
+    const filterGroup = newsPage.querySelector<HTMLElement>('.news-filters');
+    const buttons = newsPage.querySelectorAll<HTMLButtonElement>('[data-news-filter]');
+    const entries = newsPage.querySelectorAll<HTMLElement>('[data-news-category]');
+    const count = newsPage.querySelector<HTMLElement>('.news-count');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const category = button.dataset.newsFilter;
+        let visibleCount = 0;
+        buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+        entries.forEach((entry) => {
+          const visible = category === 'すべて' || entry.dataset.newsCategory === category;
+          entry.hidden = !visible;
+          if (visible) visibleCount += 1;
+        });
+        if (count) count.textContent = category === 'すべて' ? `${visibleCount}件のお知らせ` : `${category}：${visibleCount}件のお知らせ`;
+      });
+    });
+    if (filterGroup) filterGroup.hidden = false;
+  }
+</script>
+
+<style>
+  .news-content { padding-bottom: 104px; }
+  .news-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 32px; margin-bottom: 32px; }
+  .news-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .news-filters[hidden], .news-entry[hidden] { display: none; }
+  .news-filter { min-height: 44px; padding: 10px 20px; background: #fff; color: var(--color-text-secondary); border: 1px solid var(--color-border); border-radius: 2px; font: inherit; font-size: 13px; cursor: pointer; transition: background 180ms, color 180ms, border-color 180ms; }
+  .news-filter:hover { border-color: var(--color-brand); color: var(--color-brand); }
+  .news-filter[aria-pressed='true'] { background: var(--color-brand); border-color: var(--color-brand); color: #fff; }
+  .news-filter:focus-visible { outline: 3px solid var(--color-brand); outline-offset: 4px; }
+  .news-count { font-size: 13px; white-space: nowrap; }
+  .news-list { border-top: 1px solid var(--color-text); }
+  .news-entry { display: grid; grid-template-columns: 224px minmax(0, 1fr); align-items: baseline; gap: 40px; padding: 40px 0; border-bottom: 1px solid var(--color-border); }
+  .news-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 20px; }
+  .news-date { font: 13px/1.8 'Sora Variable', sans-serif; color: var(--color-text-tertiary); min-width: 74px; }
+  .news-entry h2 { font-size: var(--size-heading, 20px); line-height: var(--line-heading, 1.8); font-weight: 500; letter-spacing: -.015em; }
+  .news-end { margin-top: 32px; font-size: 12px; }
+  @media (max-width: 1100px) { .news-entry { grid-template-columns: 196px minmax(0, 1fr); gap: 32px; } .news-meta { gap: 12px; } }
+  @media (max-width: 760px) {
+    .news-content { padding-bottom: 64px; }
+    .news-toolbar { display: block; margin-bottom: 24px; }
+    .news-filter { padding-inline: 16px; }
+    .news-count { margin-top: 20px; }
+    .news-entry { grid-template-columns: 1fr; gap: 16px; padding-block: 28px; }
+    .news-meta { gap: 20px; }
+    .news-entry h2 { font-size: var(--size-heading, 18px); line-height: var(--line-heading, 1.9); }
+  }
+  @media (prefers-reduced-motion: reduce) { .news-filter { transition: none; } }
+</style>

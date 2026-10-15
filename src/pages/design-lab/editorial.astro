@@ -1,0 +1,210 @@
+---
+import DesignConceptLayout from '../../layouts/DesignConceptLayout.astro';
+import { Image } from 'astro:assets';
+import demoPhoto from '../../assets/images/gallery/PXL_20240428_024805833.MP.jpg';
+import conferencePhoto from '../../assets/images/gallery/IMG_6065.jpg';
+import awardPhoto from '../../assets/images/gallery/1733474239904 (1).jpg';
+import devicePhoto from '../../assets/images/hero-device.png';
+
+const challenges = [
+  { num: '01', title: '操作の壁', text: '遠隔操作やVR空間での作業は、従来のコントローラでは直感的に動かせません。習熟に時間がかかり、導入が進まない原因になっています。' },
+  { num: '02', title: '感覚の壁', text: '画面越しでは、触れたものの硬さや重さがわかりません。力覚フィードバックの不在が、操作精度と安心感の両方を損なっています。' },
+  { num: '03', title: '身体の壁', text: '全身の動きに依存する操作方法では、身体的制約のある方や狭い空間での利用に限界があります。さらに、人とは形状や動きの異なるアバタ・機械をどう操作するかも課題です。' },
+];
+const solutions = [
+  { num: '01', en: 'Remote operation', title: '遠隔重機操作', text: '身体を大きく動かさずに重機を操作できるインタフェースを設計。身体特性に応じた入力で、遠隔作業に参加できる人を広げることを目指します。' },
+  { num: '02', en: 'Welfare & rehabilitation', title: '福祉・リハビリテーション', text: '身体機能を拡張し、自立をサポート。リモート就労や、力覚フィードバックによる直感的な操作体験の可能性を拓きます。' },
+  { num: '03', en: 'Entertainment', title: 'エンターテインメント', text: 'アバタを自分の身体のように操作する、物理ベースの没入体験。VRゲームやe-sportsに、フィジカルなインタラクションを。' },
+];
+const news = [
+  { date: '2024.12', type: '受賞', title: 'SIGGRAPH Asia 2024 Best Demo in Show Award を受賞しました' },
+  { date: '2024.10', type: '受賞', title: 'DCEXPO NEDO賞・SIGGRAPH Special Prize をダブル受賞しました' },
+  { date: '2024.10', type: '学会発表', title: 'ACM UIST 2024にて「Selfrionette」論文が採択されました' },
+];
+---
+
+<DesignConceptLayout title="B — Human Editorial" concept="editorial">
+  <div class="editorial-site" id="top">
+    <header class="site-header wrap">
+      <a href="#top" class="wordmark brand-jp" aria-label="うつしみ トップ">うつしみ</a>
+      <p class="brand-note">うつしみ株式会社</p>
+      <nav aria-label="メインナビゲーション">
+        <a href="#vision">私たちの視点</a>
+        <a href="#solutions">事業領域</a>
+        <a href="#technology">技術</a>
+        <a href="/company">チーム</a>
+      </nav>
+      <a href="/contact" class="header-contact">話してみる <span aria-hidden="true">↗</span></a>
+      <details class="mobile-menu">
+        <summary>メニュー <span aria-hidden="true">＋</span></summary>
+        <nav aria-label="モバイルナビゲーション">
+          <a href="#vision">私たちの視点 <span aria-hidden="true">↓</span></a>
+          <a href="#solutions">事業領域 <span aria-hidden="true">↓</span></a>
+          <a href="#technology">技術 <span aria-hidden="true">↓</span></a>
+          <a href="#research">研究と実績 <span aria-hidden="true">↓</span></a>
+          <a href="#news">最新情報 <span aria-hidden="true">↓</span></a>
+          <a href="/company">チーム <span aria-hidden="true">↗</span></a>
+          <a href="/contact">お問い合わせ <span aria-hidden="true">↗</span></a>
+        </nav>
+      </details>
+    </header>
+
+    <main>
+      <section class="hero wrap" aria-labelledby="hero-title">
+        <div class="hero-eyebrow"><span class="little-star" aria-hidden="true">✳</span> TECHNOLOGY, WITH A HUMAN TOUCH.</div>
+        <div class="hero-intro">
+          <h1 id="hero-title">指先の力で、<br /><span>あらゆるものを動かす。</span></h1>
+          <div class="hero-side">
+            <p>誰もが、どんなものでも、<br />自分の身体のように動かせる。<br />私たちは、そんな未来を<br />指先からつくっています。</p>
+            <a href="#vision" class="text-link">うつしみについて <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <div class="hero-photos">
+          <figure class="hero-main-photo">
+            <Image src={demoPhoto} alt="展示会で、来場者が指先の入力デバイスとVRを体験している様子" width={1600} widths={[600, 1000, 1600]} sizes="(max-width: 700px) calc(100vw - 40px), 67vw" loading="eager" />
+            <figcaption><span>01 / EXPERIENCE</span><span>身体の可能性を、体験へ。</span></figcaption>
+          </figure>
+          <div class="hero-object">
+            <div class="object-frame">
+              <span class="object-label">身体性インタフェース</span>
+              <Image src={devicePhoto} alt="指先に装着した身体性インタフェースの力入力デバイス" widths={[400, 650]} sizes="(max-width: 700px) 100vw, 27vw" loading="eager" />
+              <a href="#technology" class="object-arrow" aria-label="身体性インタフェースの技術を見る">↗</a>
+            </div>
+            <p>小さな指先に、<br />大きな可能性を。</p>
+          </div>
+        </div>
+        <div class="hero-foot"><span>HUMAN × TECHNOLOGY</span><p>研究室から、社会へ。</p><a href="#vision">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></a></div>
+      </section>
+
+      <section class="vision wrap section-space" id="vision">
+        <div class="section-label"><span>01</span> OUR PERSPECTIVE <span class="label-jp">私たちの視点</span></div>
+        <div class="vision-intro">
+          <h2>人とデジタルのあいだに、<br />まだ壁がある。</h2>
+          <p>遠隔操作、VR、ロボティクス。<br />技術は進化しても、人が機械を「自分の身体のように」動かせる世界には至っていません。うつしみは、そのあいだにある壁に向き合います。</p>
+        </div>
+        <div class="challenge-columns">
+          {challenges.map((item) => (
+            <article><div class="article-top"><span>{item.num}</span><h3>{item.title}</h3></div><p>{item.text}</p></article>
+          ))}
+        </div>
+      </section>
+
+      <section class="solutions section-space" id="solutions">
+        <div class="wrap">
+          <div class="section-label"><span>02</span> WHAT WE DO <span class="label-jp">事業領域</span></div>
+          <div class="solutions-heading"><h2>課題の整理から、<br />動くプロトタイプまで。</h2><p>お客様の課題に合わせた力覚マッピングの設計・PoC開発・効果検証を、一貫してサポートします。</p></div>
+          <div class="solution-list">
+            {solutions.map((item) => (
+              <a href="/solutions" class="solution-item">
+                <div class="solution-meta"><span>{item.num}</span><span>{item.en}</span></div>
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+                <span class="solution-arrow" aria-hidden="true">↗</span>
+              </a>
+            ))}
+          </div>
+          <div class="solution-bottom"><span>LISTEN → PROTOTYPE → VERIFY</span><a class="text-link" href="/solutions">共創の進め方を知る <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <section class="technology wrap section-space" id="technology">
+        <div class="section-label"><span>03</span> OUR TECHNOLOGY <span class="label-jp">技術</span></div>
+        <div class="technology-spread">
+          <figure class="technology-image"><Image src={devicePhoto} alt="手を乗せた身体性インタフェース" widths={[600, 1000]} sizes="(max-width: 700px) 100vw, 50vw" loading="lazy" /><figcaption>身体性インタフェース — Fingertip force-input interface</figcaption></figure>
+          <div class="technology-copy"><span class="eyebrow">SMALL MOVEMENTS. NEW POSSIBILITIES.</span><h2>指先と、<br />世界をつなぐ。</h2><p class="product-name">身体性インタフェース</p><p>指先の力を全身の関節トルクに変換する逆動力学。全身アバタの操作と力覚フィードバックを、ひとつのインタフェースで実現します。</p><p>棒揺らし・押す・泳ぐ・登る。タスク固有のモジュールなしに、多様な全身インタラクションを可能にします。</p><ul class="specs"><li>片手7自由度の指力入力</li><li>逆動力学変換</li><li>力覚フィードバック</li><li>全身アバタ操作</li></ul><a href="/products" class="text-link">技術を詳しく見る <span aria-hidden="true">↗</span></a></div>
+        </div>
+      </section>
+
+      <section class="research wrap section-space" id="research">
+        <div class="section-label"><span>04</span> FROM THE LAB, TO THE WORLD <span class="label-jp">研究と実績</span></div>
+        <div class="research-title"><h2>触れてもらう。<br />その先へ、進んでいく。</h2><p>国内外のカンファレンスで、研究を発表し、体験を届ける。実際に体験いただいた方々からの評価が、複数の受賞につながっています。</p></div>
+        <div class="research-spread">
+          <figure class="research-photo"><Image src={conferencePhoto} alt="研究発表の会場で、来場者に身体性インタフェースの仕組みを紹介する様子" width={1400} widths={[600, 1000, 1400]} sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1440px) 50vw, 640px" loading="lazy" /><figcaption>FIELD NOTES / 展示・デモの現場から</figcaption></figure>
+          <div class="research-records">
+            <div class="record"><span class="record-kind">PUBLICATION</span><div><h3>ACM UIST 2024</h3><p>「Selfrionette」論文採択</p></div></div>
+            <div class="record"><span class="record-kind">AWARD</span><div><h3>SIGGRAPH Asia 2024</h3><p>Best Demo in Show Award</p></div></div>
+            <div class="record"><span class="record-kind">AWARDS</span><div><h3>DCEXPO</h3><p>NEDO賞 / SIGGRAPH Special Prize</p></div></div>
+            <div class="exhibitions"><span>EXHIBITIONS & PRESENTATIONS</span><p>SIGGRAPH 2025 / Maker Faire Tokyo / 日本VR学会全国大会</p></div>
+            <a href="/products" class="text-link">研究・論文を読む <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="news wrap section-space" id="news">
+        <div class="news-heading"><div class="section-label"><span>05</span> JOURNAL <span class="label-jp">最新情報</span></div><a href="/news" class="text-link">すべてのお知らせ <span aria-hidden="true">↗</span></a></div>
+        <div class="news-layout"><figure><Image src={awardPhoto} alt="SIGGRAPH Asia 2024の受賞トロフィーと身体性インタフェース" width={1400} widths={[600, 1000, 1400]} sizes="(max-width: 700px) calc(100vw - 40px), (max-width: 1440px) 28vw, 410px" loading="lazy" /><figcaption>SIGGRAPH ASIA 2024 / BEST DEMO IN SHOW</figcaption></figure><div class="news-list">{news.map((item) => (<a href="/news" class="news-item"><div class="news-meta"><time>{item.date}</time><span>{item.type}</span></div><h3>{item.title}</h3><span class="news-arrow" aria-hidden="true">↗</span></a>))}</div></div>
+      </section>
+
+      <section class="contact-section" id="contact"><div class="wrap contact-inner"><div><span class="eyebrow">LET’S MAKE SOMETHING POSSIBLE.</span><h2>次の可能性を、<br />一緒に。</h2><p>技術デモのご依頼、共同研究のご相談、取材のお申し込み。<br />まずは、お話を聞かせてください。</p></div><a href="/contact" class="contact-circle"><span>お問い合わせ</span><span aria-hidden="true">↗</span></a></div></section>
+    </main>
+
+    <footer class="site-footer wrap"><a href="#top" class="wordmark brand-jp" aria-label="うつしみ トップ">うつしみ</a><p>うつしみ株式会社</p><div class="footer-links"><a href="/company">会社概要</a><a href="/privacy">プライバシーポリシー</a><a href="/contact/">お問い合わせ ↗</a></div><small>© Utsushimi</small></footer>
+  </div>
+</DesignConceptLayout>
+
+<style>
+  .editorial-site { --paper: #f5f2e9; --ink: #2c3029; --muted: #65695e; --rust: #a8482e; --rule: #d3d1c4; background: var(--paper); color: var(--ink); font-family: 'Noto Sans JP Variable', 'Noto Sans JP', sans-serif; font-size: 15px; line-height: 1.85; overflow: clip; }
+  .editorial-site * { box-sizing: border-box; }
+  h1,h2,h3,p,figure { margin: 0; } a { color: inherit; text-decoration: none; } a:focus-visible { outline: 2px solid var(--rust); outline-offset: 6px; } img { display: block; max-width: 100%; } .wrap { width: min(1280px, calc(100% - 112px)); margin-inline: auto; }
+  .site-header { position: relative; min-height: 105px; display: flex; align-items: center; border-bottom: 1px solid var(--rule); gap: 28px; }
+  .mobile-menu { display: none; }
+  .wordmark { font-family: 'Sora Variable', sans-serif; font-size: 37px; font-weight: 650; letter-spacing: -.085em; line-height: 1; } .wordmark span { color: var(--rust); }
+  .brand-note { font-family: 'Sora Variable', sans-serif; font-size: 9px; line-height: 1.5; letter-spacing: .03em; padding-left: 25px; border-left: 1px solid var(--rule); }
+  .site-header nav { display: flex; gap: 30px; margin-left: auto; font-size: 12px; font-weight: 500; }
+  .site-header nav a:hover,.footer-links a:hover { color: var(--rust); }
+  .header-contact { display: inline-flex; align-items: center; gap: 22px; border: 1px solid var(--ink); border-radius: 50%; padding: 17px 27px; font-size: 12px; margin-left: 8px; transition: background .2s, color .2s; }
+  .header-contact:hover { background: var(--ink); color: var(--paper); }.header-contact span { font-size: 18px; }
+  .hero { padding-top: 35px; } .hero-eyebrow { display: flex; align-items: center; gap: 10px; font-family: 'Sora Variable',sans-serif; font-size: var(--size-label, 10px); letter-spacing: .13em; }.little-star { font-size: 23px; color: var(--rust); line-height: 1; }
+  .hero-intro { display: grid; grid-template-columns: minmax(0, 1fr) 250px; gap: 50px; align-items: end; margin-top: 28px; }
+  h1,h2 { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif; font-weight: 500; letter-spacing: -.055em; }
+  h1 { font-size: var(--size-title, clamp(40px, 4.8vw, 72px)); line-height: var(--line-title, 1.4); } h1 span { color: var(--rust); }
+  .hero-side { padding: 0 0 10px 22px; border-left: 1px solid var(--rule); } .hero-side p { font-size: var(--size-description, 13px); line-height: var(--line-description, 2.1); } .text-link { display: inline-flex; align-items: center; gap: 32px; font-size: 12px; font-weight: 500; border-bottom: 1px solid var(--ink); padding-bottom: 7px; transition: color .2s, gap .2s; } .text-link:hover { color: var(--rust); gap: 40px; } .text-link span { font-size: 19px; font-family: sans-serif; line-height: 1; } .hero-side .text-link { margin-top: 21px; }
+  .hero-photos { display: grid; grid-template-columns: 2.42fr 1fr; gap: 36px; margin-top: 39px; align-items: start; } .hero-main-photo img { width: 100%; height: 374px; object-fit: cover; object-position: 50% 49%; } figcaption { font-size: 10px; color: var(--muted); margin-top: 11px; } .hero-main-photo figcaption { display: flex; justify-content: space-between; } .hero-main-photo figcaption span:first-child { font-family: 'Sora Variable',sans-serif; font-size: 9px; letter-spacing: .07em; }
+  .object-frame { position: relative; background: #e4ded0; padding: 43px 22px 27px; } .object-frame img { width: 100%; height: 206px; object-fit: cover; mix-blend-mode: multiply; } .object-label { position: absolute; top: 16px; left: 20px; font-size: var(--size-label, 9px); letter-spacing: .1em; font-family: 'Sora Variable', sans-serif; } .object-arrow { display: grid; place-items: center; position: absolute; bottom: 13px; right: 15px; width: 38px; height: 38px; background: var(--paper); border-radius: 50%; font: 23px sans-serif; } .object-arrow:hover { background: var(--rust); color: white; } .hero-object > p { font-family: 'Hiragino Mincho ProN','Yu Mincho',serif; font-size: var(--size-description, 25px); line-height: var(--line-description, 1.55); letter-spacing: -.04em; margin-top: 18px; }
+  .hero-foot { margin-top: 25px; padding-block: 17px; border-top: 1px solid var(--rule); display: flex; align-items: center; gap: 30px; } .hero-foot > span,.hero-foot > a { font-family: 'Sora Variable', sans-serif; font-size: 9px; letter-spacing: .09em; } .hero-foot p { font-size: var(--size-description, 11px); } .hero-foot > a { margin-left: auto; } .hero-foot > a span { font-size: 15px; padding-left: 16px; }
+  .section-space { padding-top: 115px; padding-bottom: 110px; scroll-margin-top: 20px; }.section-label { display: flex; gap: 18px; align-items: center; font-family: 'Sora Variable',sans-serif; font-size: var(--size-label, 10px); letter-spacing: .06em; }.section-label > span:first-child { color: var(--rust); } .label-jp { font-family: 'Noto Sans JP Variable',sans-serif; font-size: 10px; color: var(--muted); border-left: 1px solid var(--rule); padding-left: 18px; }
+  h2 { font-size: var(--size-heading, clamp(35px, 3.8vw, 52px)); line-height: var(--line-heading, 1.6); } .vision-intro,.solutions-heading,.research-title { display: grid; grid-template-columns: 1.5fr 1fr; gap: 90px; margin-top: 37px; align-items: center; } .vision-intro > p,.solutions-heading > p,.research-title > p { max-width: 410px; color: var(--muted); font-size: var(--size-description, 14px); line-height: var(--line-description, 2.2); }
+  .challenge-columns { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 50px; margin-top: 63px; } .challenge-columns article { border-top: 1px solid var(--rule); padding-top: 23px; } .article-top { display: flex; align-items: baseline; gap: 18px; }.article-top > span { color: var(--rust); font: 30px Georgia,serif; }.article-top h3 { font-size: var(--size-subheading, 18px); font-weight: 500; }.challenge-columns article > p { font-size: var(--size-description, 13px); line-height: var(--line-description, 2.15); color: var(--muted); margin-top: 16px; }
+  .solutions { background: #e9e8df; } .solution-list { margin-top: 65px; }.solution-item { display: grid; grid-template-columns: 190px 1fr 1.3fr 30px; gap: 32px; align-items: center; border-top: 1px solid #bfc3b5; padding: 30px 0; transition: color .2s; } .solution-item:hover { color: var(--rust); } .solution-item:last-child { border-bottom: 1px solid #bfc3b5; }.solution-meta { display: flex; align-items: center; gap: 20px; font: 10px/1.6 'Sora Variable',sans-serif; }.solution-meta span:first-child { color: var(--rust); font-size: 12px; }.solution-item h3 { font-weight: 500; font-size: var(--size-subheading, 20px); line-height: var(--line-subheading, 1.7); }.solution-item > p { color: var(--muted); font-size: var(--size-description, 12px); line-height: var(--line-description, 2.1); }.solution-arrow { font: 27px sans-serif; }.solution-bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 27px; }.solution-bottom > span { font: 9px 'Sora Variable',sans-serif; letter-spacing: .08em; color: var(--muted); }
+  .technology-spread { display: grid; grid-template-columns: 1.08fr 1fr; gap: 95px; align-items: center; margin-top: 50px; } .technology-image { align-self: stretch; background: #e9e4d8; padding: 34px; display: flex; flex-direction: column; justify-content: center; } .technology-image img { width: 100%; mix-blend-mode: multiply; } .technology-image figcaption { margin-top: 26px; font-family: 'Sora Variable',sans-serif; font-size: 9px; }.eyebrow { font: 9px 'Sora Variable',sans-serif; letter-spacing: .11em; font-size: var(--size-label, 9px); }.technology-copy h2 { margin-top: 20px; }.product-name { font: 30px 'Sora Variable',sans-serif; margin-top: 26px; }.product-name span { font-size: 9px; display: block; margin-top: 7px; letter-spacing: .02em; }.technology-copy > p:not(.product-name) { color: var(--muted); font-size: 13px; line-height: 2.1; margin-top: 21px; }.specs { display: grid; grid-template-columns: 1fr 1fr; list-style: none; margin: 27px 0 33px; padding: 17px 0; gap: 10px 20px; border-block: 1px solid var(--rule); font-size: 11px; }.specs li::before { content: '+'; color: var(--rust); margin-right: 9px; }
+  .research { border-top: 1px solid var(--rule); }.research-spread { display: grid; grid-template-columns: 1.15fr 1fr; gap: 90px; margin-top: 57px; align-items: start; }.research-photo img { width: 100%; height: 425px; object-fit: cover; object-position: center; }.research-photo figcaption { font: 9px 'Sora Variable',sans-serif; letter-spacing: .04em; }.record { border-top: 1px solid var(--rule); padding: 24px 0; display: grid; grid-template-columns: 96px 1fr; gap: 15px; align-items: baseline; }.record-kind { font: 8px 'Sora Variable',sans-serif; letter-spacing: .09em; color: var(--rust); }.record h3 { font: 17px/1.5 'Sora Variable',sans-serif; font-size: var(--size-subheading, 17px); }.record p { font-size: var(--size-description, 11px); margin-top: 7px; color: var(--muted); }.exhibitions { border-top: 1px solid var(--rule); padding-top: 18px; }.exhibitions > span { font: 8px 'Sora Variable',sans-serif; letter-spacing: .05em; color: var(--muted); }.exhibitions > p { font-size: var(--size-description, 10px); margin-top: 6px; line-height: var(--line-description, 1.8); }.research-records > .text-link { margin-top: 27px; }
+  .news { border-top: 1px solid var(--rule); padding-top: 60px; }.news-heading { display: flex; align-items: center; justify-content: space-between; }.news-layout { display: grid; grid-template-columns: 1fr 1.9fr; gap: 80px; margin-top: 45px; align-items: start; }.news-layout figure img { width: 100%; aspect-ratio: 1.48; object-fit: cover; }.news-layout figcaption { font: 8px 'Sora Variable',sans-serif; letter-spacing: .04em; }.news-item { display: block; position: relative; border-top: 1px solid var(--rule); padding: 21px 35px 22px 0; }.news-item:last-child { border-bottom: 1px solid var(--rule); }.news-meta { display: flex; gap: 20px; color: var(--muted); font-size: 10px; }.news-meta time { font-family: 'Sora Variable',sans-serif; }.news-meta > span { color: var(--rust); }.news-item h3 { font-size: var(--size-subheading, 13px); font-weight: 500; line-height: var(--line-subheading, 1.8); margin-top: 9px; }.news-arrow { position: absolute; right: 0; top: 40%; font: 22px sans-serif; }.news-item:hover h3 { color: var(--rust); }
+  .contact-section { background: #dcc8b7; padding-block: 88px; }.contact-inner { display: flex; align-items: center; justify-content: space-between; gap: 60px; }.contact-inner h2 { font-size: var(--size-heading, 60px); line-height: var(--line-heading, 1.5); margin-top: 21px; }.contact-inner p { font-size: var(--size-description, 13px); line-height: var(--line-description, 2.1); margin-top: 25px; color: #55564c; }.contact-circle { border: 1px solid var(--ink); width: 218px; height: 218px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; margin-right: 90px; flex-shrink: 0; transition: background .2s,color .2s; }.contact-circle span:first-child { font-size: 14px; }.contact-circle span:last-child { font: 55px/1 sans-serif; }.contact-circle:hover { background: var(--ink); color: var(--paper); }
+  .site-footer { display: flex; align-items: center; gap: 30px; min-height: 148px; }.site-footer > p { font: 9px 'Sora Variable',sans-serif; font-size: var(--size-description, 9px); }.footer-links { margin-left: auto; display: flex; gap: 25px; font-size: 10px; }.site-footer > small { font: 9px 'Sora Variable',sans-serif; margin-left: 10px; }
+  @media (min-width: 1600px) { .hero-intro { grid-template-columns: minmax(0,1fr) 275px; } }
+  @media (max-width: 1100px) { .wrap { width: calc(100% - 64px); }.site-header { gap: 18px; }.site-header nav { gap: 17px; }.brand-note { display: none; }.hero-intro { grid-template-columns: minmax(0,1fr) 205px; gap: 20px; }h1 { font-size: var(--size-title, 5vw); }.hero-photos { gap: 23px; }.hero-main-photo img { height: 330px; }.object-frame { padding-inline: 12px; }.object-frame img { height: 180px; }.hero-object > p { font-size: var(--size-description, 23px); }.vision-intro,.solutions-heading,.research-title { gap: 50px; }.solution-item { grid-template-columns: 160px 1fr 1.2fr 22px; gap: 22px; }.solution-item h3 { font-size: var(--size-subheading, 17px); }.technology-spread,.research-spread { gap: 50px; }.challenge-columns { gap: 30px; }.record { grid-template-columns: 80px 1fr; }.record h3 { font-size: var(--size-subheading, 14px); }.news-layout { gap: 45px; }.footer-links { gap: 16px; }.site-footer > p { display: none; }.contact-circle { margin-right: 20px; } }
+  @media (max-width: 700px) { .wrap { width: calc(100% - 40px); }.site-header { min-height: 80px; gap: 15px; }.wordmark { font-size: 42px; }.site-header nav { display: none; }.header-contact { margin-left: auto; font-size: 11px; padding: 10px 16px; gap: 16px; }.hero { padding-top: 26px; }.hero-eyebrow { font-size: var(--size-label, 8px); letter-spacing: .055em; gap: 8px; }.little-star { font-size: 19px; }.hero-intro { grid-template-columns: 1fr; margin-top: 24px; gap: 24px; }h1 { font-size: var(--size-title, clamp(27px, 7.1vw, 49px)); line-height: var(--line-title, 1.62); letter-spacing: -.065em; }.hero-side { border-left: 0; padding: 0; display: flex; align-items: end; justify-content: space-between; gap: 20px; }.hero-side p { font-size: var(--size-description, 11px); line-height: var(--line-description, 1.9); }.hero-side .text-link { font-size: 10px; gap: 12px; margin: 0 0 5px; flex-shrink: 0; }.hero-photos { grid-template-columns: 1fr; gap: 24px; margin-top: 29px; }.hero-main-photo img { height: 265px; object-position: 44% 50%; }.hero-main-photo figcaption { font-size: 8px; }.hero-main-photo figcaption span:first-child { font-size: 8px; }.hero-object { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; align-items: center; }.object-frame { padding: 31px 13px 18px; }.object-frame img { height: 112px; }.object-label { font-size: var(--size-label, 7px); top: 12px; left: 13px; }.object-arrow { width: 27px; height: 27px; font-size: 17px; right: 8px; bottom: 8px; }.hero-object > p { margin: 0; font-size: var(--size-description, 23px); line-height: var(--line-description, 1.75); }.hero-foot { margin-top: 22px; gap: 14px; padding-block: 14px; }.hero-foot > span { font-size: 7px; }.hero-foot > p { display: none; }.hero-foot > a { font-size: 7px; letter-spacing: 0; }.hero-foot > a span { padding-left: 6px; font-size: 12px; }.section-space { padding-block: 67px; }.section-label { font-size: var(--size-label, 8px); letter-spacing: .02em; gap: 11px; }.label-jp { padding-left: 11px; font-size: 8px; }.vision-intro,.solutions-heading,.research-title { grid-template-columns: 1fr; gap: 25px; margin-top: 29px; }h2 { font-size: var(--size-heading, 32px); line-height: var(--line-heading, 1.7); letter-spacing: -.055em; }.vision-intro > p,.solutions-heading > p,.research-title > p { font-size: var(--size-description, 12px); line-height: var(--line-description, 2.1); }.challenge-columns { grid-template-columns: 1fr; gap: 26px; margin-top: 37px; }.challenge-columns article { padding-top: 19px; }.article-top > span { font-size: 24px; }.article-top h3 { font-size: var(--size-subheading, 16px); }.challenge-columns article > p { font-size: var(--size-description, 12px); margin-top: 11px; }.solution-list { margin-top: 34px; }.solution-item { grid-template-columns: 1fr 25px; gap: 11px; padding: 24px 0; }.solution-meta { grid-column: 1; font-size: 9px; gap: 14px; }.solution-item h3 { grid-column: 1; font-size: var(--size-subheading, 19px); }.solution-item > p { grid-column: 1; font-size: var(--size-description, 12px); margin-top: 2px; }.solution-arrow { grid-column: 2; grid-row: 2; font-size: 23px; }.solution-bottom { gap: 15px; align-items: start; flex-direction: column; }.solution-bottom > span { font-size: 8px; }.solution-bottom > .text-link { margin-top: 7px; }.text-link { font-size: 11px; }.technology-spread,.research-spread { grid-template-columns: 1fr; gap: 35px; margin-top: 33px; }.technology-image { padding: 26px; }.technology-image img { max-height: 330px; object-fit: cover; }.technology-image figcaption { font-size: 8px; margin-top: 18px; }.technology-copy h2 { margin-top: 13px; }.technology-copy > p:not(.product-name) { font-size: 12px; }.product-name { font-size: 29px; margin-top: 17px; }.specs { font-size: 10px; gap: 10px; }.research-photo img { height: 290px; }.record { grid-template-columns: 83px 1fr; padding-block: 20px; }.record h3 { font-size: var(--size-subheading, 16px); }.news { padding-top: 42px; }.news-heading { gap: 20px; align-items: start; }.news-heading > .text-link { font-size: 9px; gap: 9px; flex-shrink: 0; }.news-heading .label-jp { display: none; }.news-layout { grid-template-columns: 1fr; gap: 28px; margin-top: 30px; }.news-layout figure img { aspect-ratio: 1.55; }.news-item h3 { font-size: var(--size-subheading, 12px); }.contact-section { padding-block: 57px; }.contact-inner { gap: 30px; align-items: end; }.contact-inner .eyebrow { font-size: var(--size-label, 7px); letter-spacing: .03em; }.contact-inner h2 { font-size: var(--size-heading, 37px); margin-top: 15px; }.contact-inner p { font-size: var(--size-description, 11px); margin-top: 18px; }.contact-inner p br { display: none; }.contact-circle { width: 100px; height: 100px; gap: 10px; margin: 0 0 5px; }.contact-circle span:first-child { font-size: 9px; }.contact-circle span:last-child { font-size: 32px; }.site-footer { flex-wrap: wrap; gap: 24px; padding-block: 37px; }.site-footer > .wordmark { font-size: 39px; }.footer-links { margin-left: auto; display: flex; flex-direction: column; gap: 7px; font-size: 10px; }.site-footer > small { flex-basis: 100%; margin: 0; font-size: 8px; } }
+  @media (max-width: 700px) {
+    .site-header { gap: 15px; }
+    .site-header .header-contact { padding: 10px 13px; gap: 8px; }
+    .mobile-menu { display: block; }
+    .mobile-menu summary { cursor: pointer; display: flex; align-items: center; gap: 5px; min-height: 44px; list-style: none; font-size: 10px; }
+    .mobile-menu summary::-webkit-details-marker { display: none; }
+    .mobile-menu summary > span { font-size: 16px; }
+    .mobile-menu[open] summary > span { transform: rotate(45deg); }
+    .site-header .mobile-menu[open] nav { display: grid; position: absolute; inset: 100% 0 auto; z-index: 30; padding: 10px 22px 16px; gap: 0; background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 16px 24px #2c302914; margin: 0; }
+    .mobile-menu nav a { display: flex; align-items: center; justify-content: space-between; padding-block: 12px; border-bottom: 1px solid var(--rule); font-size: 12px; }
+    .mobile-menu nav a:last-child { border-bottom: 0; color: var(--rust); }
+  }
+  @media (prefers-reduced-motion: reduce) { a { transition: none !important; } }
+</style>
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.editorial-site .mobile-menu');
+  menu?.querySelectorAll('a').forEach(link => link.addEventListener('click', () => { menu.open = false; }));
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && menu?.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus();
+    }
+  });
+</script>
+
+<style>
+  .wordmark { white-space: nowrap; flex-shrink: 0; }
+  .brand-note { white-space: nowrap; font-family: Sora Variable,
+    sans-serif; }
+  .site-footer > p { display: block; white-space: nowrap; font-family: 'Noto Sans JP Variable', sans-serif; font-size: var(--size-description, 9px); }
+  @media (min-width: 701px) and (max-width: 950px) { .site-header { gap: 16px; } .site-header > .wordmark { font-size: 30px; } .site-header > nav { gap: 16px; font-size: 11px; } .site-header .header-contact { margin-left: 0; padding: 12px 16px; font-size: 11px; gap: 14px; } }
+  @media (max-width: 700px) { .site-header > .wordmark { font-size: 26px; } .site-footer > .wordmark { font-size: 39px; } .site-footer > p { flex-basis: 100%; } .site-footer .footer-links { margin-left: 0; flex-direction: row; flex-wrap: wrap; gap: 8px 20px; } }
+  @media (max-width: 360px) { .site-header { gap: 8px; } .site-header > .wordmark { font-size: 22px; } .site-header .header-contact { font-size: 10px; padding-inline: 9px; gap: 5px; } .mobile-menu summary { font-size: 9px; gap: 4px; } .mobile-menu summary > span { font-size: 14px; } .hero-side { gap: 12px; } .hero-side .text-link { font-size: 9px; gap: 8px; } }
+</style>

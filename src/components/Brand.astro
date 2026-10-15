@@ -1,0 +1,13 @@
+---
+import { company } from '../data/company';
+---
+<a href="/" class="brand brand-jp" aria-label={`${company.displayName} トップ`}>
+  <span class="brand-symbol brand-symbol-c" aria-hidden="true"></span>
+  <span>{company.displayName}</span>
+</a>
+<style>
+  .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; white-space: nowrap; font: var(--brand-font-weight) 30px/1 var(--brand-font-family), "Noto Sans JP Variable", sans-serif; letter-spacing: var(--brand-letter-spacing); min-height: 44px; }
+  .brand-symbol { color: var(--color-brand); }
+  .brand-symbol { flex-shrink: 0; }
+  @media(max-width:760px) { .brand { font-size: 26px; gap: 9px; } }
+</style>

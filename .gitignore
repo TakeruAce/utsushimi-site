@@ -1,0 +1,20 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+# Never commit company notes or local verification records.
+private-notes/
+artifacts/
+archive/
+COMPANY_PM.md
+CONTENT_REVIEW.md
+server/

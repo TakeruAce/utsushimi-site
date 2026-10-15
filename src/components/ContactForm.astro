@@ -1,0 +1,108 @@
+---
+interface Props {
+  inquiryTypes: string[];
+}
+const { inquiryTypes } = Astro.props;
+---
+
+<div class="contact-form" data-contact-form>
+  <p class="form-fallback" data-form-fallback>お問い合わせフォームをご利用いただくには、JavaScriptを有効にしてください。</p>
+  <form method="post" data-inquiry-form hidden aria-label="お問い合わせ内容の入力">
+    <fieldset data-fields>
+    <legend class="visually-hidden">お問い合わせ内容</legend>
+    <p class="form-note">ご入力内容をメールの下書きにまとめます。<br />最後に、お使いのメールアプリで確認して送信してください。</p>
+    <div class="field">
+      <label for="inquiry-organization">会社名・ご所属 <span>任意</span></label>
+      <input id="inquiry-organization" name="organization" autocomplete="organization" maxlength="120" placeholder="うつしみ株式会社" />
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="inquiry-name">ご担当者名 <span class="required">必須</span></label>
+        <input id="inquiry-name" name="name" autocomplete="name" required maxlength="80" placeholder="山田 太郎" />
+      </div>
+      <div class="field">
+        <label for="inquiry-email">返信先メールアドレス <span>任意</span></label>
+        <input id="inquiry-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" aria-describedby="inquiry-email-hint" placeholder="name@example.com" />
+        <p class="field-hint" id="inquiry-email-hint">送信元と異なるアドレスへの返信をご希望の場合のみ。</p>
+      </div>
+    </div>
+    <div class="field">
+      <label for="inquiry-type">お問い合わせ種別 <span>任意</span></label>
+      <select id="inquiry-type" name="type">
+        <option value="">選択してください</option>
+        {inquiryTypes.map(type => <option value={type}>{type}</option>)}
+        <option value="その他のご相談">その他のご相談</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="inquiry-message">お問い合わせ内容 <span class="required">必須</span></label>
+      <textarea id="inquiry-message" name="message" rows="7" required maxlength="3000" aria-describedby="inquiry-message-hint" placeholder="ご相談の背景や、試してみたいことなどをお聞かせください。"></textarea>
+      <p class="field-hint" id="inquiry-message-hint">対象の機器・現在の課題・ご希望の時期など、分かる範囲でご記入ください。</p>
+    </div>
+    </fieldset>
+    <div class="form-actions">
+      <button class="button" type="submit" data-submit>メールアプリを開く <span aria-hidden="true">↗</span></button>
+      <p class="send-note">メールアプリで送信するまで、お問い合わせは届きません。</p>
+    </div>
+    <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+  </form>
+  <details class="mail-help" data-mail-help hidden>
+    <summary>メールアプリが開かない・Webメールをお使いの場合</summary>
+    <div class="mail-help-content">
+      <p>宛先と本文をコピーして、普段お使いのメールサービスの新規メールに貼り付けてください。</p>
+      <p class="mail-subject" data-mail-subject></p>
+      <div class="copy-actions">
+        <button type="button" class="copy-button" data-copy-recipient>宛先をコピー</button>
+        <button type="button" class="copy-button" data-copy-body>本文をコピー</button>
+      </div>
+      <a class="text-link" data-open-mail>件名だけ入れたメールを開く <span aria-hidden="true">↗</span></a>
+      <p class="field-hint">本文をコピーした場合は、開いたメールに貼り付けてから送信してください。</p>
+      <div data-manual-copy hidden>
+        <label for="inquiry-copy" data-copy-label>コピー用の内容</label>
+        <textarea id="inquiry-copy" data-copy-text readonly rows="7" spellcheck="false"></textarea>
+      </div>
+      <p class="form-status" data-copy-status role="status" aria-live="polite"></p>
+    </div>
+  </details>
+</div>
+
+<script>
+  import { initializeContactForm } from '../scripts/contactForm';
+  document.querySelectorAll<HTMLElement>('[data-contact-form]').forEach(initializeContactForm);
+</script>
+
+<style>
+  fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  button:disabled { cursor: default; opacity: .55; }
+  .contact-form { margin-top: 32px; }
+  .form-note, .field-hint, .send-note, .form-fallback { color: var(--color-text-secondary); font-size: 13px; line-height: 1.8; }
+  .form-note { margin-bottom: 24px; }
+  .field { min-width: 0; margin-top: 24px; }
+  label { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 14px; font-weight: 550; margin-bottom: 10px; }
+  label > span { font-size: 11px; font-weight: 400; color: var(--color-text-secondary); }
+  label > .required { color: var(--color-brand); }
+  input, select, textarea { width: 100%; min-width: 0; border: 1px solid var(--color-border-strong); border-radius: var(--radius-control); padding: 12px 14px; background: var(--color-surface-elevated); color: var(--color-text); font-size: 16px; line-height: 1.7; }
+  input, select { min-height: 50px; }
+  textarea { resize: vertical; min-height: 170px; }
+  input::placeholder, textarea::placeholder { color: var(--color-text-tertiary); opacity: 1; }
+  input:focus, select:focus, textarea:focus { border-color: var(--color-brand); }
+  .field-hint { margin-top: 10px; }
+  .form-actions { margin-top: 32px; }
+  .form-actions .button { width: 100%; }
+  .send-note { margin-top: 14px; }
+  .form-status { color: var(--color-text-secondary); font-size: 14px; line-height: 1.8; margin-top: 18px; }
+  .form-status:empty { margin-top: 0; }
+  .mail-help { margin-top: 24px; border-top: 1px solid var(--color-border); padding-top: 20px; }
+  .mail-help summary { cursor: pointer; font-size: 13px; color: var(--color-text-secondary); line-height: 1.8; }
+  .mail-help-content { padding-top: 16px; }
+  .mail-help-content > p { font-size: 13px; line-height: 1.8; color: var(--color-text-secondary); }
+  .mail-help-content .mail-subject { margin-top: 16px; overflow-wrap: anywhere; }
+  .copy-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-block: 16px; }
+  .copy-button { padding: 10px 16px; min-height: 44px; border: 1px solid var(--color-border-strong); border-radius: var(--radius-control); color: var(--color-text); background: var(--color-surface-elevated); cursor: pointer; font-size: 13px; }
+  .copy-button:hover { border-color: var(--color-brand); color: var(--color-brand); }
+  .mail-help .text-link { font-size: 13px; }
+  [data-manual-copy] { margin-top: 20px; }
+  @media(min-width:1200px) { .field-row { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 20px; } }
+  @media(max-width:400px) { .form-actions .button { gap: 12px; padding-inline: 14px; font-size: 13px; } }
+</style>

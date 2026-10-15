@@ -1,0 +1,109 @@
+---
+import PseudoHapticsDemo from './PseudoHapticsDemo.astro';
+---
+<section class="section haptic-mapping" id="haptic-mapping" aria-labelledby="haptic-mapping-title">
+  <div class="site-shell">
+    <div class="section-heading">
+      <p class="eyebrow">02 / HOW HAPTICS WORK</p>
+      <h2 class="heading-lg" id="haptic-mapping-title">力と動きの関係が、<br />触覚を変える。</h2>
+      <p class="lead">この身体性インタフェースは、指先で入力した力と、バーチャル空間の動きとの対応を設計します。その対応が、重さや硬さなどの感じ方につながります。</p>
+    </div>
+
+    <div class="approach-comparison">
+      <figure class="approach approach--active">
+        <figcaption>
+          <p class="approach-label">能動的な力覚提示の一例</p>
+          <h3>装置から、力を伝える</h3>
+        </figcaption>
+        <ol class="approach-flow active-flow" aria-label="能動的な力覚提示の流れ">
+          <li>
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="m24 5 16 9v20l-16 9-16-9V14L24 5Z M8 14l16 9 16-9 M24 23v20" /></svg>
+            <span>バーチャル物体の<br />状態</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+          </li>
+          <li>
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="5" y="11" width="20" height="26" rx="2" /><path d="M11 17h8v14h-8z M25 21h12v6H25 M39 13v22 M33 9l6-5 6 5" /></svg>
+            <span>モーターなどを<br />駆動</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+          </li>
+          <li>
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M19 43v-8l-8-10a4 4 0 0 1 6-5l5 5V10a4 4 0 0 1 8 0v13h4a8 8 0 0 1 8 8v12 M3 10h12 M10 5l5 5-5 5" /></svg>
+            <span>指や手に<br />力を加える</span>
+          </li>
+        </ol>
+        <p class="approach-caption">バーチャル物体の状態に応じて、装置が力を発生させます。</p>
+      </figure>
+
+      <figure class="approach approach--yubi">
+        <figcaption>
+          <p class="approach-label">身体性インタフェース</p>
+          <h3>力入力と、動きの対応を変える</h3>
+        </figcaption>
+        <ol class="approach-flow yubi-flow" aria-label="身体性インタフェースの触覚知覚の流れ">
+          <li>
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M17 6v10a7 7 0 0 0 14 0V6 M10 29h28v12H10z M17 35h14 M24 21v6 M20 23l4 4 4-4" /></svg>
+            <span>指先の力を<br />検出</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+          </li>
+          <li class="mapping-step">
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M7 6v35h35 M12 35 37 10" /><path d="m12 35 25-10" stroke-dasharray="3 4" /></svg>
+            <span>力と動きの<br />対応を設計</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+          </li>
+          <li>
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="m19 11 13 7v16l-13 7-13-7V18l13-7Z M6 18l13 7 13-7 M19 25v16 M40 26V5 M35 10l5-5 5 5" /></svg>
+            <span>バーチャル物体・<br />アバタが動く</span>
+            <span class="flow-arrow" aria-hidden="true">→</span>
+          </li>
+          <li>
+            <svg class="step-icon" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M16 43v-9a16 16 0 1 1 24-14l4 9h-7v8h-9v6 M20 17a5 5 0 1 1 10 0 M25 22v4" /><circle cx="25" cy="30" r="1" fill="currentColor" stroke="none" /></svg>
+            <span>触覚として<br />知覚</span>
+          </li>
+        </ol>
+        <p class="approach-caption">指がセンサを押す反力と、目に見える動きの関係を利用します。</p>
+      </figure>
+    </div>
+
+    <PseudoHapticsDemo />
+  </div>
+</section>
+
+
+
+<style>
+  .haptic-mapping { background: var(--color-surface); }
+  .approach-comparison { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 20px; }
+  .approach { min-width: 0; padding: 30px 24px 24px; border: 1px solid var(--color-border); background: var(--color-surface-alt); }
+  .approach--yubi { border-color: var(--color-brand); background: var(--color-brand-pale); }
+  .approach-label { font-size: var(--size-label, 12px); color: var(--color-text-secondary); }
+  .approach--yubi .approach-label { color: var(--color-brand); font-family: var(--font-display); letter-spacing: .04em; }
+  .approach h3 { margin-top: 10px; font-size: var(--size-subheading, 22px); letter-spacing: -.035em; }
+  .approach-flow { display: grid; margin: 32px 0 24px; padding: 0; list-style: none; }
+  .active-flow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .yubi-flow { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .approach-flow li { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 16px; text-align: center; font-size: 16px; line-height: 1.7; }
+  .step-icon { display: block; width: 48px; height: 48px; color: var(--color-text-secondary); stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .approach--yubi .step-icon { color: var(--color-brand); }
+  .mapping-step > span:not(.flow-arrow) { color: var(--color-brand); font-weight: 600; }
+  .flow-arrow { position: absolute; top: 10px; right: -8px; width: 16px; color: var(--color-text-tertiary); font: 400 20px/1.5 var(--font-body); }
+  .approach-caption { padding-top: 18px; border-top: 1px solid var(--color-border); font-size: 16px; line-height: 1.85; color: var(--color-text-secondary); }
+  .approach--yubi .approach-caption { border-color: #c8d7f6; }
+  @media (max-width: 1100px) {
+    .approach-comparison { grid-template-columns: 1fr; }
+    .approach { padding: 28px; }
+    .approach-flow { margin-block: 28px; }
+
+  }
+  @media (max-width: 760px) {
+    .approach { padding: 24px 20px; }
+    .approach h3 { font-size: var(--size-subheading, 21px); }
+    .approach-flow { grid-template-columns: 1fr; gap: 32px; margin-block: 28px; }
+    .approach-flow li { flex-direction: row; gap: 20px; text-align: left; }
+    .approach-flow li > span:not(.flow-arrow) br { display: none; }
+    .step-icon { flex: 0 0 42px; width: 42px; height: 42px; }
+    .flow-arrow { top: auto; right: auto; bottom: -30px; left: 13px; transform: rotate(90deg); }
+    .approach-caption { padding-top: 20px; }
+
+  }
+
+</style>

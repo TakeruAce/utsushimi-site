@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactBand from '../components/ContactBand.astro';
+import HapticMapping from '../components/HapticMapping.astro';
+import { Image } from 'astro:assets';
+import systemFlow from '../assets/images/system-flow.png';
+import device from '../assets/images/hero-device.png';
+
+const techFeatures = [
+  {
+    title: '指先力入力デバイス',
+    description: 'ロードセルを搭載した小型デバイス。親指・人差し指で3軸、小指で1軸、片手で合計7自由度の力入力を320Hzで検出。再利用可能な結束バンドと高反発ウレタンフォームで快適に装着。',
+    spec: '7 DoF / 320Hz',
+  },
+  {
+    title: '力-運動変換',
+    description: '指先の力をバーチャル空間のエンドエフェクタ（手足）の目標力に変換。運動方程式により質量・粘性を調整し、操作の質感を自在にコントロール。',
+    spec: 'Real-time',
+  },
+  {
+    title: '逆動力学による全身制御',
+    description: '四肢ごとに独立したヤコビアンを用い、エンドエフェクタの目標力から各関節トルクを算出。壁を押すと足に踏ん張りの力が伝わるなど、物理法則に基づく全身協調を実現。',
+    spec: 'Inverse Dynamics',
+  },
+  {
+    title: '力入力と動きによる触覚知覚',
+    description: '指がセンサを押す反力と、目に見える動きの関係を利用します。力入力に対するバーチャル物体・アバタの動き方を変えることで、重さ・硬さなどの感じ方を設計します。',
+    spec: 'Pseudo-haptics',
+  },
+];
+
+const demos = [
+  { id: 'bar', label: '鉄棒', src: '/videos/bar.mp4' },
+  { id: 'bordaring', label: 'ボルダリング', src: '/videos/bordaring.mp4' },
+  { id: 'swimming', label: '水泳', src: '/videos/swimming.mp4' },
+  { id: 'tarzan', label: 'ターザンロープ', src: '/videos/tarzan.mp4' },
+  { id: 'pushing', label: '押す・持ち上げる', src: '/videos/pushing.mp4' },
+];
+const publications = [
+  {
+    venue: 'ACM UIST 2024', id: 'uist2024',
+    title: 'Selfrionette: A Fingertip Force-Input Controller for Continuous Full-Body Avatar Manipulation and Diverse Haptic Interactions',
+    authors: 'Takeru Hashimoto*, Yutaro Hirao* — ACM UIST 2024, Pittsburgh, USA',
+    metrics: '掲載時点の実績：2,218 downloads / 6 citations',
+    pages: Array.from({ length: 14 }, (_, i) => `/papers/uist2024/page-${String(i + 1).padStart(2, '0')}.png`),
+    paper: '/papers/uist2024/paper.pdf', poster: '', posterImage: '',
+  },
+  {
+    venue: 'VRSJ 2025', id: 'vrsj2025',
+    title: 'ユビ：指先力入力システムによる環境と全身の力相互作用の実現',
+    authors: '平尾悠太朗*, 橋本健* — 第30回日本バーチャルリアリティ学会大会',
+    metrics: '',
+    pages: Array.from({ length: 3 }, (_, i) => `/papers/vrsj2025/page-${i + 1}.png`),
+    paper: '/papers/vrsj2025/paper.pdf', poster: '/papers/vrsj2025-poster/poster.pdf', posterImage: '/papers/vrsj2025-poster/page-1.png',
+  },
+  {
+    venue: 'VRSJ 2024', id: 'vrsj2024',
+    title: 'Selfrionette: 指先力入力による全身アバタ操作と多様な力触覚インタラクション',
+    authors: '橋本健*, 平尾悠太朗* — 第29回日本バーチャルリアリティ学会大会',
+    metrics: '',
+    pages: Array.from({ length: 4 }, (_, i) => `/papers/vrsj2024/page-${i + 1}.png`),
+    paper: '/papers/vrsj2024/paper.pdf', poster: '/papers/vrsj2024-poster/poster.pdf', posterImage: '/papers/vrsj2024-poster/page-1.png',
+  },
+];
+---
+
+<BaseLayout title="身体性インタフェースの技術 | うつしみ" description="うつしみが開発する身体性インタフェースの技術詳細。指先力入力デバイス、全身アバタ制御、力入力と動きのマッピングによる触覚知覚の仕組みをご紹介します。">
+  <main id="main-content">
+    <section class="page-heading technology-hero">
+      <div class="site-shell hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">TECHNOLOGY</p>
+          <h1 class="heading-xl">身体の可能性を、<br /><span>指先から。</span></h1>
+          <p class="product-name">身体性インタフェース</p>
+          <p class="lead muted">指先の力入力から、全身アバタの物理シミュレーションまで。人とデジタルをつなぐ、身体性インタフェースの技術をご紹介します。</p>
+          <div class="hero-actions"><a href="#demo-player" class="button">動きのデモを見る <span aria-hidden="true">↓</span></a><a href="#system-overview" class="text-link">仕組みを知る <span aria-hidden="true">↓</span></a></div>
+        </div>
+        <figure class="device-figure">
+          <div class="device-label"><span>FINGERTIP FORCE INPUT</span><span>身体性インタフェース</span></div>
+          <Image src={device} alt="身体性インタフェースの指先力入力デバイスを手に装着して操作する様子" width={1280} widths={[640, 960, 1280]} sizes="(max-width: 800px) calc(100vw - 40px), (max-width: 1440px) 48vw, 620px" loading="eager" fetchpriority="high" />
+          <figcaption>小さな指先の入力を、全身の動きへ。</figcaption>
+        </figure>
+      </div>
+      <nav class="site-shell page-index" aria-label="技術ページ内のナビゲーション"><a href="#system-overview"><span>01</span> システム全体像</a><a href="#haptic-mapping"><span>02</span> 触覚のしくみ</a><a href="#demo-player"><span>03</span> 操作デモ</a><a href="#core-technologies"><span>04</span> コア技術</a><a href="#publications"><span>05</span> 論文・発表</a></nav>
+    </section>
+
+    <section class="section surface" id="system-overview">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">01 / SYSTEM OVERVIEW</p><h2 class="heading-lg">指先と全身をつなぐ、<br />物理シミュレーション。</h2><p class="lead muted">指先の力からエンドエフェクタの目標力、関節トルク、全身運動へ。<br />すべての計算は物理エンジン上で実行されます。</p></div>
+        <figure class="system-figure"><div class="system-scroll" tabindex="0" role="region" aria-label="身体性インタフェースのシステム全体図。小さい画面では横にスクロールできます。"><Image src={systemFlow} alt="両手の指先で力を入力し、人型アバタの関節トルクを駆動することで、全身と環境の物理的な相互作用を実現する流れ" width={1800} widths={[1200, 1800, 2400]} sizes="(max-width: 800px) 900px, (max-width: 1440px) 92vw, 1280px" loading="lazy" /></div><figcaption><span class="mobile-diagram-note">図は横にスクロールできます。</span><a class="text-link" href={systemFlow.src} target="_blank" rel="noopener noreferrer">図を拡大する <span aria-hidden="true">↗</span></a></figcaption></figure>
+        <ol class="system-steps"><li><span>INPUT</span><p>指先の力</p></li><li><span>MAPPING</span><p>手足の目標力</p></li><li><span>INVERSE DYNAMICS</span><p>関節トルク</p></li><li><span>OUTPUT</span><p>全身の動き</p></li></ol>
+      </div>
+    </section>
+
+    <HapticMapping />
+
+    <section class="section surface" id="demo-player">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">03 / DEMONSTRATION</p><h2 class="heading-lg">指先だけで、<br />これだけの動き。</h2><p class="lead muted">タスク固有のモジュールなしに、VR空間のアバタを全身操作。<br />多様な身体インタラクションを、動画でご覧いただけます。</p></div>
+        <div class="demo-tabs" role="tablist" aria-label="インタラクションの種類">{demos.map((demo, i) => (<button type="button" id={`demo-tab-${demo.id}`} role="tab" class="demo-tab" data-demo-tab={demo.id} aria-controls={`demo-panel-${demo.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>{demo.label}</button>))}</div>
+        <div class="demo-viewer">{demos.map((demo, i) => (<div class="demo-panel" id={`demo-panel-${demo.id}`} role="tabpanel" aria-labelledby={`demo-tab-${demo.id}`} tabindex="0" hidden={i !== 0}><video data-demo-video={demo.id} controls playsinline preload={i === 0 ? 'metadata' : 'none'} aria-label={`${demo.label}の全身アバタ操作デモ`}><source src={demo.src} type="video/mp4" /><a href={demo.src}>{demo.label}の動画を開く</a></video></div>))}</div>
+        <noscript><p class="demo-fallback">動画を選択：{demos.map(demo => <a href={demo.src}>{demo.label}</a>)}</p></noscript>
+        <p class="demo-caption">デモは身体性インタフェースの指先力入力による全身アバタ操作を示しています。</p>
+      </div>
+    </section>
+
+    <section class="section" id="core-technologies">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">04 / CORE TECHNOLOGIES</p><h2 class="heading-lg">身体性インタフェースを支える、4つの技術。</h2></div>
+        <div class="technology-grid">{techFeatures.map((feature, i) => (<article class="technology-card"><div class="technology-card-top"><span class="technology-number">0{i + 1}</span><span class="tag">{feature.spec}</span></div><h3>{feature.title}</h3><p class="muted">{feature.description}</p></article>))}</div>
+      </div>
+    </section>
+
+    <section class="section surface" id="publications">
+      <div class="site-shell">
+        <div class="section-heading"><p class="eyebrow">05 / PUBLICATIONS</p><h2 class="heading-lg">研究の背景と、技術の詳細。</h2><p class="lead muted">身体性インタフェースに関する論文と学会発表。研究の仕組みや評価は、各資料からご覧いただけます。</p></div>
+        <div class="publication-list">{publications.map(publication => (<article class="publication" id={publication.id}><div class="publication-intro"><a class="paper-cover" href={publication.paper} target="_blank" rel="noopener noreferrer" aria-label={`${publication.venue}の論文PDFを開く`}><img src={publication.pages[0]} alt={`${publication.venue}の論文1ページ目`} loading="lazy" /></a><div class="publication-copy"><p class="eyebrow">{publication.venue}</p><h3>{publication.title}</h3><p class="muted publication-authors">{publication.authors}</p>{publication.metrics && <p class="publication-metrics">{publication.metrics}</p>}<div class="publication-links"><a class="text-link" href={publication.paper} target="_blank" rel="noopener noreferrer">論文PDF <span aria-hidden="true">↗</span></a>{publication.poster && <a class="text-link" href={publication.poster} target="_blank" rel="noopener noreferrer">ポスターPDF <span aria-hidden="true">↗</span></a>}</div></div></div><details class="paper-preview"><summary>論文・ポスターのプレビュー <span aria-hidden="true">＋</span></summary><div class="paper-pages">{publication.pages.map((page, i) => (<a href={page} target="_blank" rel="noopener noreferrer" aria-label={`${publication.venue}の論文 ${i + 1}ページ目を拡大`}><img src={page} alt={`${publication.venue} 論文 ${i + 1}ページ目`} loading="lazy" /><span>PAGE {String(i + 1).padStart(2, '0')}</span></a>))}{publication.posterImage && <a href={publication.poster} target="_blank" rel="noopener noreferrer" aria-label={`${publication.venue}のポスターPDFを開く`}><img src={publication.posterImage} alt={`${publication.venue}のポスター`} loading="lazy" /><span>POSTER</span></a>}</div></details></article>))}</div>
+      </div>
+    </section>
+    <ContactBand />
+  </main>
+</BaseLayout>
+
+<script>
+  const player = document.querySelector<HTMLElement>('#demo-player');
+  if (player) {
+    const tabs = Array.from(player.querySelectorAll<HTMLButtonElement>('[data-demo-tab]'));
+    const selectTab = (tab: HTMLButtonElement, focus = false) => {
+      const selectedId = tab.dataset.demoTab;
+      tabs.forEach(item => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+        const panel = document.getElementById(item.getAttribute('aria-controls') ?? '');
+        const video = panel?.querySelector<HTMLVideoElement>('video');
+        if (panel) panel.hidden = !selected;
+        if (video) {
+          if (!selected) video.pause();
+          else if (video.dataset.demoVideo === selectedId) video.preload = 'metadata';
+        }
+      });
+      if (focus) tab.focus();
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => selectTab(tab));
+      tab.addEventListener('keydown', event => {
+        let next = index;
+        if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = tabs.length - 1;
+        else return;
+        event.preventDefault();
+        selectTab(tabs[next], true);
+      });
+    });
+  }
+</script>
+
+<style>
+  .technology-hero { padding-bottom: 0; }
+  .hero-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 68px; }
+  .hero-copy .heading-xl { margin-top: 22px; }
+  .hero-copy .heading-xl > span { color: var(--color-brand); }
+  .product-name { font: 500 32px/1.4 'Sora Variable', sans-serif; margin-top: 28px; letter-spacing: -.04em; }
+  .product-name > span { display: block; margin-top: 5px; font-size: 13px; letter-spacing: .02em; }
+  .hero-copy > .lead { margin-top: 26px; max-width: 590px; }
+  .hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 26px; margin-top: 34px; }
+  .device-figure { background: var(--color-surface-alt); border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden; }
+  .device-figure > img { width: 100%; height: auto; mix-blend-mode: multiply; }
+  .device-label { display: flex; justify-content: space-between; gap: 18px; padding: 22px 25px 0; font: 12px/1.6 'Sora Variable', sans-serif; letter-spacing: .03em; color: var(--color-text-secondary); font-size: var(--size-label, 12px); }
+  .device-label > span:last-child { color: var(--color-brand); }
+  .device-figure figcaption { padding: 19px 25px; border-top: 1px solid var(--color-border); font-size: 14px; }
+  .page-index { display: flex; gap: 35px; padding-block: 28px; border-top: 1px solid var(--color-border); margin-top: 66px; flex-wrap: wrap; }
+  .page-index a { display: inline-flex; gap: 14px; align-items: center; font-size: 14px; }
+  .page-index a > span { font: 12px 'Sora Variable', sans-serif; color: var(--color-brand); }
+  .page-index a:hover { color: var(--color-brand); }
+  .section-heading { max-width: 940px; }
+  .section-heading .heading-lg { margin-top: 22px; }
+  .section-heading .lead { max-width: 830px; margin-top: 24px; }
+  .system-figure { margin-top: 44px; }
+  .system-scroll { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 5px; overflow-x: auto; }
+  .system-scroll > img { display: block; width: 100%; min-width: 900px; height: auto; }
+  .system-figure figcaption { display: flex; align-items: center; justify-content: flex-end; gap: 20px; margin-top: 18px; font-size: 14px; color: var(--color-text-secondary); }
+  .mobile-diagram-note { display: none; }
+  .system-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 35px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--color-border); }
+  .system-steps li { padding: 25px 24px; position: relative; border-right: 1px solid var(--color-border); }
+  .system-steps li:first-child { padding-left: 0; }.system-steps li:last-child { border: 0; }
+  .system-steps li > span { font: 12px/1.7 'Sora Variable', sans-serif; color: var(--color-brand); }
+  .system-steps li > p { margin-top: 12px; font-size: var(--size-description, 20px); font-weight: 500; }
+  .demo-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 36px 0 22px; }
+  .demo-tab { cursor: pointer; border: 1px solid var(--color-border-strong); border-radius: 4px; background: var(--color-surface); color: #344454; min-height: 48px; padding: 12px 22px; font-size: 16px; }
+  .demo-tab:hover { border-color: var(--color-brand); color: var(--color-brand); }.demo-tab[aria-selected='true'] { background: var(--color-brand); border-color: var(--color-brand); color: #fff; }
+  .demo-viewer { border: 1px solid var(--color-border); background: #111823; border-radius: 6px; overflow: hidden; }.demo-panel[hidden] { display: none; }
+  .demo-panel video { display: block; width: 100%; max-height: 740px; aspect-ratio: 16 / 9; background: #111823; }
+  .demo-caption { font-size: 14px; color: var(--color-text-secondary); margin-top: 19px; }.demo-fallback a { display: inline-block; margin: 14px; text-decoration: underline; }
+  .technology-grid { display: grid; grid-template-columns: 1fr 1fr; margin-top: 44px; border-top: 1px solid var(--color-border-strong); }
+  .technology-card { padding: 34px 35px; border-bottom: 1px solid var(--color-border); }.technology-card:nth-child(odd) { border-right: 1px solid var(--color-border); padding-left: 0; }.technology-card:nth-child(even) { padding-right: 0; }
+  .technology-card-top { display: flex; gap: 20px; align-items: center; justify-content: space-between; }.technology-number { font: 24px/1 'Sora Variable', sans-serif; color: var(--color-brand); }.technology-card h3 { font-size: var(--size-subheading, 23px); line-height: var(--line-subheading, 1.65); font-weight: 600; margin-top: 26px; }.technology-card p { font-size: var(--size-description, 16px); line-height: var(--line-description, 2); margin-top: 17px; }
+  .publication-list { margin-top: 44px; }.publication { border-top: 1px solid var(--color-border-strong); padding: 38px 0; }.publication:last-child { padding-bottom: 0; }.publication-intro { display: grid; grid-template-columns: 180px 1fr; gap: 38px; align-items: start; }.paper-cover { display: block; padding: 12px; background: var(--color-surface-alt); border: 1px solid var(--color-border); }.paper-cover img { width: 100%; height: auto; }.publication-copy h3 { max-width: 850px; font-size: var(--size-subheading, 23px); line-height: var(--line-subheading, 1.7); font-weight: 500; margin-top: 15px; overflow-wrap: anywhere; }.publication-authors { font-size: 16px; margin-top: 18px; line-height: 1.9; }.publication-metrics { font-size: 14px; color: var(--color-text-tertiary); margin-top: 12px; }.publication-links { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 24px; }
+  .paper-preview { margin-top: 30px; border: 1px solid var(--color-border); border-radius: 5px; }.paper-preview summary { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 18px 22px; list-style: none; font-size: 16px; }.paper-preview summary::-webkit-details-marker { display: none; }.paper-preview summary > span { color: var(--color-brand); font-size: 23px; }.paper-preview[open] summary > span { transform: rotate(45deg); }.paper-pages { display: grid; grid-template-columns: repeat(7,minmax(0,1fr)); gap: 20px; padding: 22px; background: var(--color-surface-alt); border-top: 1px solid var(--color-border); }.paper-pages a > img { width: 100%; height: auto; border: 1px solid var(--color-border); }.paper-pages a > span { display: block; font: 12px/1.8 'Sora Variable', sans-serif; margin-top: 9px; color: var(--color-text-secondary); }
+  @media(max-width: 1100px) { .hero-grid { gap: 36px; }.hero-copy .heading-xl { font-size: var(--size-title, 48px); }.page-index { gap: 25px; }.paper-pages { grid-template-columns: repeat(5,minmax(0,1fr)); } }
+  @media(max-width: 800px) { .hero-grid { grid-template-columns: 1fr; gap: 36px; }.hero-copy .heading-xl { font-size: var(--size-title, clamp(35px, 9vw, 48px)); }.product-name { font-size: 29px; margin-top: 22px; }.hero-copy > .lead { margin-top: 22px; }.hero-actions { gap: 22px; margin-top: 26px; }.device-label { font-size: var(--size-label, 12px); padding: 18px 20px 0; }.device-figure figcaption { padding: 17px 20px; font-size: 14px; }.page-index { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 14px; margin-top: 36px; padding-block: 24px; }.page-index a { font-size: 13px; gap: 10px; }.section-heading .heading-lg { margin-top: 18px; }.section-heading .lead { margin-top: 20px; }.system-figure { margin-top: 30px; }.system-figure figcaption { flex-wrap: wrap; justify-content: flex-start; gap: 14px; }.mobile-diagram-note { display: block; }.system-steps { grid-template-columns: 1fr 1fr; }.system-steps li { padding: 20px 18px; }.system-steps li:nth-child(odd) { padding-left: 0; }.system-steps li:nth-child(even) { border-right: 0; }.system-steps li:nth-child(n+3) { border-top: 1px solid var(--color-border); }.system-steps li > span { font-size: 12px; overflow-wrap: anywhere; }.system-steps li > p { font-size: var(--size-description, 17px); margin-top: 8px; }.demo-tabs { gap: 8px; margin-top: 28px; }.demo-tab { padding: 11px 14px; font-size: 14px; min-height: 46px; }.demo-caption { font-size: 13px; }.technology-grid { grid-template-columns: 1fr; margin-top: 30px; }.technology-card,.technology-card:nth-child(odd),.technology-card:nth-child(even) { padding: 27px 0; border-right: 0; }.technology-card h3 { font-size: var(--size-subheading, 21px); margin-top: 21px; }.technology-card p { margin-top: 13px; }.publication-list { margin-top: 30px; }.publication { padding-block: 29px; }.publication-intro { grid-template-columns: 1fr; gap: 24px; }.paper-cover { width: 135px; }.publication-copy h3 { font-size: var(--size-subheading, 20px); line-height: var(--line-subheading, 1.7); }.publication-authors { margin-top: 14px; }.publication-metrics { font-size: 13px; }.publication-links { gap: 25px; margin-top: 20px; }.paper-preview { margin-top: 24px; }.paper-preview summary { font-size: 14px; padding: 15px; }.paper-pages { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 15px; padding: 15px; }.paper-pages a > span { font-size: 12px; } }
+  @media(max-width: 360px) { .page-index a { font-size: 12px; gap: 7px; }.technology-card-top { gap: 12px; }.technology-card-top .tag { font-size: 12px; }.system-steps li > span { font-size: 12px; }.paper-pages { gap: 10px; } }
+
+  .device-label { flex-wrap: wrap; }
+  .device-label > span { white-space: nowrap; }
+</style>
