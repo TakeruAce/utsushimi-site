@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactBand from '../components/ContactBand.astro';
 import { Image } from 'astro:assets';
-import teamHirao from '../assets/images/2026-10-14_hirao-portrait-tone_v3.webp';
+import teamHirao from '../assets/images/2026-10-15_hirao-portrait-hires_v1.png';
 import teamHashimoto from '../assets/images/team-hashimoto.png';
 import { company } from '../data/company';
 
@@ -67,7 +67,7 @@ const timeline = [
         {team.map((member) => (
           <article class="team-member" aria-labelledby={`member-${member.id}`}>
             <div class="portrait-frame">
-              <Image src={member.photo} class:list={[member.id === 'hirao' && 'portrait-hirao']} alt={member.name} width={880} widths={[360, 640, 880]} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 46vw, 492px" loading="lazy" />
+              <Image src={member.photo} class:list={[member.id === 'hirao' && 'portrait-hirao']} alt={member.name} width={member.id === 'hirao' ? 1440 : 880} widths={member.id === 'hirao' ? [480, 960, 1440, 1920] : [360, 640, 880]} quality={member.id === 'hirao' ? 95 : undefined} sizes="(max-width: 760px) calc(100vw - 40px), (max-width: 1100px) 46vw, 492px" loading="lazy" />
             </div>
             <div class="member-meta">
               <div class="member-heading">
@@ -96,7 +96,7 @@ const timeline = [
               </div>
               <div class="profile-layout">
                 <div class="profile-portrait">
-                  <Image src={member.photo} class:list={[member.id === 'hirao' && 'portrait-hirao']} alt={member.name} width={640} widths={[360, 640, 880]} sizes="(max-width: 760px) calc(100vw - 80px), 320px" loading="lazy" />
+                  <Image src={member.photo} class:list={[member.id === 'hirao' && 'portrait-hirao']} alt={member.name} width={member.id === 'hirao' ? 960 : 640} widths={member.id === 'hirao' ? [480, 960, 1440] : [360, 640, 880]} quality={member.id === 'hirao' ? 95 : undefined} sizes="(max-width: 760px) calc(100vw - 80px), 320px" loading="lazy" />
                 </div>
                 <div class="profile-copy">
                   <p class="profile-role">{member.role}</p>
@@ -251,11 +251,10 @@ const timeline = [
     .company-details dt { padding-top: 0; }
   }
 
-  img.portrait-hirao { object-position: 52% 50%; transform: scale(1.6); transform-origin: 52% 43%; }
+  img.portrait-hirao { object-position: 50% 20%; }
 </style>
 
 <style>
   @media(max-width:760px) { .mission-copy h2 span { display: inline-block; max-width: 100%; text-wrap: balance; } }
 
-  img.portrait-hirao { object-position: 52% 50%; transform: scale(1.6); transform-origin: 52% 43%; }
 </style>
