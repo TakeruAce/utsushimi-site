@@ -10,7 +10,7 @@ const nav = [
 ];
 const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.replace(/\/$/, '');
 ---
-<header class:list={["site-header", { "site-header-over-intro": overIntro }]} data-intro-header={overIntro || undefined}>
+<header class:list={["site-header", { "site-header-over-intro": overIntro }]} data-intro-header={overIntro || undefined} data-on-intro={overIntro || undefined}>
   <div class="site-shell header-inner">
     <Brand />
     <nav class="desktop-nav" aria-label="メインナビゲーション">
@@ -26,9 +26,22 @@ const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.
     </details>
   </div>
 </header>
+{overIntro && (
+  <noscript>
+    <style is:inline>
+      /* Keep navigation legible beyond the video when JavaScript is disabled. */
+      .site-header-over-intro[data-on-intro] { background: var(--color-surface) !important; border-color: var(--color-border) !important; color: var(--color-text) !important; }
+      .site-header-over-intro[data-on-intro]::before { display: none; }
+      .site-header-over-intro[data-on-intro] .brand-symbol { color: var(--color-brand) !important; }
+      .site-header-over-intro[data-on-intro] .desktop-nav .header-contact { background: var(--color-brand) !important; border-color: var(--color-brand) !important; color: #fff !important; }
+      .site-header-over-intro[data-on-intro] .desktop-nav a:not(.header-contact):hover { color: var(--color-brand) !important; }
+    </style>
+  </noscript>
+)}
 <style>
   .site-header { position: sticky; top: 0; z-index: 40; background: var(--color-surface); border-bottom: 1px solid var(--color-border); }
-  .site-header-over-intro { position: fixed; inset: 0 0 auto; transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease; }
+  .site-header-over-intro { position: fixed; inset: 0 0 auto; }
+  .site-header-over-intro[data-header-ready] { transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease; }
   .site-header-over-intro[data-on-intro] { background: transparent; border-color: transparent; color: #fff; }
   .site-header-over-intro[data-on-intro]::before { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(#071932b3, #07193200); }
   .site-header-over-intro[data-on-intro] :global(.brand-symbol) { color: #fff; }
@@ -38,7 +51,7 @@ const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.
   .site-header-over-intro .mobile-menu nav { color: var(--color-text); }
   .site-header-over-intro:has(.mobile-menu[open]) { background: var(--color-surface); border-color: var(--color-border); color: var(--color-text); }
   .site-header-over-intro:has(.mobile-menu[open]) :global(.brand-symbol) { color: var(--color-brand); }
-  @media(prefers-reduced-motion: reduce) { .site-header-over-intro { transition: none; } }
+  @media(prefers-reduced-motion: reduce) { .site-header-over-intro[data-header-ready] { transition: none; } }
   .header-inner { min-height: 92px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
   .desktop-nav { display: flex; align-items: center; gap: 30px; }
   .desktop-nav a { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; font-weight: 500; white-space: nowrap; transition: color var(--motion-fast); }
@@ -71,6 +84,7 @@ const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.
   const overview = document.querySelector<HTMLElement>('#company-overview');
   if (introHeader && overview) {
     let frame = 0;
+    let readyFrame = 0;
     const updateHeader = () => {
       frame = 0;
       // Keep one header at the top; change its appearance as the company panel
@@ -78,7 +92,12 @@ const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.
       introHeader.toggleAttribute('data-on-intro', overview.getBoundingClientRect().top > introHeader.offsetHeight + 48);
     };
     const requestUpdate = () => { if (!frame) frame = requestAnimationFrame(updateHeader); };
+    // Match the HTML's initial overlay state without animating initialization
+    // or scroll restoration. Enable transitions after the first painted frame.
     updateHeader();
+    readyFrame = requestAnimationFrame(() => {
+      readyFrame = requestAnimationFrame(() => { introHeader.setAttribute('data-header-ready', ''); });
+    });
     window.addEventListener('scroll', requestUpdate, { passive: true });
     window.addEventListener('resize', requestUpdate, { passive: true });
     window.addEventListener('pageshow', requestUpdate);
@@ -87,6 +106,7 @@ const active = (href: string) => Astro.url.pathname.replace(/\/$/, '') === href.
     observer.observe(introHeader);
     document.addEventListener('astro:before-swap', () => {
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(readyFrame);
       observer.disconnect();
       window.removeEventListener('scroll', requestUpdate);
       window.removeEventListener('resize', requestUpdate);
